@@ -1,5 +1,4 @@
 # WM-2026
-# WEB-SS26
 Eine webseite über die WM26
 ================================================================================
           PLAN DE TRAVAIL DÉTAILLÉ - PROJET WEB 2026 (FIFA WORLD CUP)
