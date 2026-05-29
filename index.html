@@ -1,29 +1,113 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <!-- Wichtig für das Responsive / Mobile-First Design -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 2026 - Plateforme Officielle</title>
     
-    <!-- Erforderliche SEO-Kriterien laut Aufgabenstellung -->
-    <title>FIFA Fussball-Weltmeisterschaft 2026</title>
-    <meta name="description" content="Entdecken Sie alle Informationen zur FIFA Fussball-Weltmeisterschaft 2026: Interaktiver Spielplan,
-     Austragungsorte und ein spannendes Fussball-Quiz.">
-    <meta name="keywords" content="FIFA, WM 2026, Fussball-Weltmeisterschaft, Spielplan, Quiz, Hochschule Worms">
-    <meta name="author" content="Dein Name / Euer Team">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Einbindung der externen CSS-Stylesheet-Datei -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- Favicon (ebenfalls erforderlich) -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
 
-    <!-- Die Navigation (Flexbox) und das Hauptlayout (Grid) kommen hierhin -->
-    <header>
-        <h1>Willkommen auf der Webseite zur FIFA WM 2026</h1>
-    </header>
+    <div class="grid-container">
+        
+        <header class="site-header">
+            <nav class="nav-container" aria-label="Navigation principale">
+                <button class="nav-button" aria-label="Ouvrir le menu de navigation">
+                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                </button>
+                
+                <div class="site-logo">
+                    FIFA <span class="logo-highlight">2026</span>
+                </div>
+                
+                <button class="nav-button" aria-label="Ouvrir la barre de recherche">
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                </button>
+            </nav>
+        </header>
+
+        <main class="hero-content">
+            <div class="hero-background" Skinner-decorative="true"></div>
+            
+            <div class="hero-inner">
+                <p class="badge-promo">LIVE FROM NORTH AMERICA</p>
+                
+                <h1 class="hero-title">
+                    UNITED FOR THE <br>
+                    <span class="text-neon">GREATEST</span> GAME
+                </h1>
+                
+                <section class="countdown-wrapper" aria-label="Temps restant avant l'événement">
+                    <div class="countdown-unit">
+                        <span class="countdown-value">724</span>
+                        <span class="countdown-label">DAYS</span>
+                    </div>
+                    <span class="countdown-separator" aria-hidden="true">:</span>
+                    <div class="countdown-unit">
+                        <span class="countdown-value">14</span>
+                        <span class="countdown-label">HOURS</span>
+                    </div>
+                    <span class="countdown-separator" aria-hidden="true">:</span>
+                    <div class="countdown-unit">
+                        <span class="countdown-value">28</span>
+                        <span class="countdown-label">MINS</span>
+                    </div>
+                </section>
+
+                <div class="action-controls">
+                    <a href="#" class="btn btn-primary">
+                        <i class="fa-solid fa-ticket" aria-hidden="true"></i> GET TICKETS
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fa-regular fa-circle-play" aria-hidden="true"></i> WATCH TEASER
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <section class="info-grid" aria-label="Informations et services">
+            
+            <article class="info-card">
+                <div class="card-icon icon-blue" aria-hidden="true">
+                    <i class="fa-regular fa-calendar-days"></i>
+                </div>
+                <div class="card-text">
+                    <h2>Match Schedule</h2>
+                    <p>Every match across 16 host cities. Plan your tournament journey.</p>
+                </div>
+            </article>
+
+            <article class="info-card">
+                <div class="card-icon icon-neon-bg" aria-hidden="true">
+                    <i class="fa-solid fa-map-pin"></i>
+                </div>
+                <div class="card-text">
+                    <h2>Fan Zones</h2>
+                    <p>Find the biggest watch parties and festival locations near you.</p>
+                </div>
+            </article>
+
+            <article class="info-card">
+                <div class="card-icon icon-gray" aria-hidden="true">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <div class="card-text">
+                    <h2>Official Merch</h2>
+                    <p>Get ready with the official kit and tournament accessories.</p>
+                </div>
+            </article>
+
+        </section>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 FIFA. Projet académique - Tous droits réservés.</p>
+        </footer>
+
+    </div>
 
 </body>
 </html>

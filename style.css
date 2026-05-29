@@ -1,1 +1,312 @@
+/* ==========================================================================
+   1. RESET, NORMALISATION & VARIABLES (PROPRETÉ DU BOX-MODEL)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Évite que les paddings déforment les grilles */
+}
+
+:root {
+    /* Palette de couleurs officielle */
+    --bg-main: #0d1117;
+    --bg-card: #161b22;
+    --color-neon: #b5e200;
+    --text-light: #ffffff;
+    --text-muted: #8b949e;
+    
+    /* Typographie */
+    --font-stack: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    font-family: var(--font-stack);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. MISE EN PAGE GLOBALE (CSS GRID) - CONFIGURATION MOBILE-FIRST
+   ========================================================================== */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Une seule colonne par défaut (Smartphone) */
+    grid-template-rows: auto auto auto auto; /* Découpage vertical automatique */
+    min-height: 100vh;
+}
+
+/* ==========================================================================
+   3. BARRE DE NAVIGATION (CSS FLEXBOX DÉDIÉ)
+   ========================================================================== */
+.site-header {
+    background-color: rgba(13, 17, 23, 0.95);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between; /* Aligne les éléments aux deux extrémités et au centre */
+    align-items: center;            /* Alignement vertical parfait */
+    padding: 1rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.nav-button:hover {
+    opacity: 0.7;
+}
+
+.site-logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+}
+
+.logo-highlight {
+    color: var(--color-neon);
+}
+
+/* ==========================================================================
+   4. ZONE HERO & ZONE COMPTE À REBOURS (FLEXBOX INTERNE)
+   ========================================================================== */
+.hero-content {
+    position: relative;
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 60vh;
+}
+
+/* Simulation graphique des projecteurs du stade (séparation fond/forme) */
+.hero-background {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 10%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        radial-gradient(circle at 70% 10%, rgba(255,255,255,0.1) 0%, transparent 40%),
+        linear-gradient(to bottom, transparent 40%, var(--bg-main) 95%),
+        radial-gradient(ellipse at center 30%, #172c33 0%, var(--bg-main) 100%);
+    z-index: 1;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 550px;
+}
+
+.badge-promo {
+    background-color: var(--color-neon);
+    color: #000;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+}
+
+.hero-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+
+.text-neon {
+    color: var(--color-neon);
+}
+
+/* Alignement du compte à rebours via Flexbox */
+.countdown-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.countdown-value {
+    color: var(--color-neon);
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.countdown-label {
+    color: var(--text-muted);
+    font-size: 0.6rem;
+    font-weight: 600;
+    margin-top: 0.2rem;
+}
+
+.countdown-separator {
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    font-weight: 700;
+    transform: translateY(-4px);
+}
+
+/* Zone Boutons d'action */
+.action-controls {
+    display: flex;
+    flex-direction: column; /* Empilés sur mobile */
+    gap: 0.75rem;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+    background-color: var(--color-neon);
+    color: #000;
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   5. GRILLE DE CARTES (CSS GRID INTERNE)
+   ========================================================================== */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 colonne verticale sur Mobile */
+    gap: 1rem;
+    padding: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.info-card {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex; /* Flexbox pour aligner l'icône à gauche du texte */
+    gap: 1.25rem;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* Variations chromatiques des icônes */
+.icon-blue    { background-color: rgba(47, 84, 235, 0.15); color: #2f54eb; }
+.icon-neon-bg { background-color: rgba(181, 226, 0, 0.1); color: var(--color-neon); }
+.icon-gray    { background-color: rgba(255, 255, 255, 0.08); color: var(--text-light); }
+
+.card-text h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.card-text p {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+}
+
+/* Footer (Pied de page) */
+.site-footer {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+/* ==========================================================================
+   6. RESPONSIVE DESIGN : MEDIA QUERIES (ÉCRANS DE 768px À 1920px)
+   ========================================================================== */
+
+/* Écrans intermédiaires (Tablettes - à partir de 768px) */
+@media screen and (min-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .action-controls {
+        flex-direction: row; /* Les boutons passent côte à côte */
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 1rem 2rem;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr); /* Grille passe à 2 colonnes */
+    }
+}
+
+/* Grands écrans (Desktop - de 1024px jusqu'à 1920px) */
+@media screen and (min-width: 1024px) {
+    .grid-container {
+        grid-template-rows: auto 1fr auto; /* Ajustement du layout global */
+    }
+
+    .hero-content {
+        min-height: 55vh;
+        padding: 6rem 0;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(3, 1fr); /* Grille passe à 3 colonnes alignées */
+        gap: 1.5rem;
+        padding: 4rem 1.5rem;
+    }
+
+    .info-card {
+        padding: 2rem;
+    }
+}
 
