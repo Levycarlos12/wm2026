@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 2026 - Reservation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-container">
+        <header class="site-header">
+            <nav class="nav-container" aria-label="Navigation principale">
+                <div class="site-logo">
+                    FIFA <span class="logo-highlight">2026</span>
+                </div>
+
+                <button id="menu-toggle" class="nav-button" aria-expanded="false" aria-controls="menu">
+                    <span class="icon">☰</span>
+                    <span class="sr-only">Navigationsmenü öffnen</span>
+                </button>
+
+                <ul id="menu" class="nav-menu" hidden>
+                    <li><a href="index.html">Home</a></li>
+                     <li><a href="Spielplan.html">Spielplan</a></li>
+                    <li><a href="info.html">About</a></li>
+                    <li><a href="Quiz.html">Quiz</a></li>
+                  
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <section class="page-header" aria-label="Titre de réservation">
+                <h1>RESERVATION</h1>
+                <p>füllen Sie Ihr Namen aus, um Ihr Ticket zu generieren und den QR-Code der Reservierung zu erhalten.</p>
+            </section>
+
+            <section class="booking-section" aria-label="Formulaire de réservation">
+                <div class="booking-container">
+                    <div id="error-message"></div>
+
+                    <div class="reservation-summary">
+                        <p><strong>Spiel :</strong> <span id="match-teams">es wird geladen...</span></p>
+                        <p><strong>Stadium :</strong> <span id="match-venue">es wird geladen...</span></p>
+                        <p><strong>Uhrzeit :</strong> <span id="match-time">es wird geladen...</span></p>
+                    </div>
+
+                    <form id="reservation-form">
+                        <div class="form-group">
+                            <label for="client-name">Nom du client</label>
+                            <input type="text" id="client-name" name="client-name" placeholder="Entrez votre nom" required>
+                        </div>
+                        <button type="submit" class="btn-submit">Mein Ticket erstellen</button>
+                    </form>
+
+                   
+
+                    <div id="ticket-card-wrapper"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 FIFA. Akademisches Projekt - Alle Rechte vorbehalten.</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function hashString(value) {
+            let hash = 2166136261;
+            for (let i = 0; i < value.length; i++) {
+                hash ^= value.charCodeAt(i);
+                hash = Math.imul(hash, 16777619);
+            }
+            return hash >>> 0;
+        }
+
+        function createPrng(seed) {
+            let value = seed >>> 0;
+            return function() {
+                value ^= value << 13;
+                value ^= value >>> 17;
+                value ^= value << 5;
+                return (value >>> 0) / 4294967296;
+            };
+        }
+
+        function createQrCanvas(content) {
+            const size = 220;
+            const modules = 25;
+            const margin = 12;
+            const moduleSize = Math.floor((size - margin * 2) / modules);
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, size, size);
+
+            const grid = Array.from({ length: modules }, () => Array(modules).fill(false));
+            const random = createPrng(hashString(content));
+
+            for (let y = 0; y < modules; y++) {
+                for (let x = 0; x < modules; x++) {
+                    grid[y][x] = random() > 0.52;
+                }
+            }
+
+            function drawFinder(x, y) {
+                for (let dy = 0; dy < 7; dy++) {
+                    for (let dx = 0; dx < 7; dx++) {
+                        const border = dx === 0 || dx === 6 || dy === 0 || dy === 6;
+                        const center = dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4;
+                        grid[y + dy][x + dx] = border || center;
+                    }
+                }
+            }
+
+            drawFinder(0, 0);
+            drawFinder(modules - 7, 0);
+            drawFinder(0, modules - 7);
+
+            ctx.fillStyle = '#000000';
+            for (let y = 0; y < modules; y++) {
+                for (let x = 0; x < modules; x++) {
+                    if (grid[y][x]) {
+                        ctx.fillRect(
+                            margin + x * moduleSize,
+                            margin + y * moduleSize,
+                            moduleSize,
+                            moduleSize
+                        );
+                    }
+                }
+            }
+
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(margin + 2 * moduleSize, margin + 2 * moduleSize, moduleSize * 3, moduleSize * 3);
+
+            return canvas;
+        }
+
+        function getQueryParam(name) {
+            return new URLSearchParams(window.location.search).get(name) || '';
+        }
+
+        function formatSeatNumber(value) {
+            return String(value).padStart(4, '0');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const matchTeams = getQueryParam('teams');
+            const matchVenue = getQueryParam('venue');
+            const matchTime = getQueryParam('time');
+            const errorMessage = document.getElementById('error-message');
+            const matchTeamsEl = document.getElementById('match-teams');
+            const matchVenueEl = document.getElementById('match-venue');
+            const matchTimeEl = document.getElementById('match-time');
+            const reservationForm = document.getElementById('reservation-form');
+            const clientNameInput = document.getElementById('client-name');
+            const ticketWrapper = document.getElementById('ticket-card-wrapper');
+
+            if (!matchTeams || !matchVenue || !matchTime) {
+                errorMessage.textContent = 'Aucune réservation de match n’a été trouvée. Retournez à la page de planning et choisissez un match.';
+                reservationForm.querySelector('.btn-submit').disabled = true;
+                return;
+            }
+
+            matchTeamsEl.textContent = matchTeams;
+            matchVenueEl.textContent = matchVenue;
+            matchTimeEl.textContent = matchTime;
+
+            reservationForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const clientName = clientNameInput.value.trim();
+
+                if (!clientName) {
+                    errorMessage.textContent = 'Veuillez saisir le nom du client pour générer le billet.';
+                    return;
+                }
+
+                errorMessage.textContent = '';
+                const seatNumber = formatSeatNumber(Math.floor(Math.random() * 10000) + 1);
+                const ticketContent = `${clientName}|${matchTeams}|${matchVenue}|${matchTime}|SIÈGE ${seatNumber}`;
+                const qrCanvas = createQrCanvas(ticketContent);
+
+                ticketWrapper.innerHTML = `
+                    <article class="reservation-card">
+                        <div class="ticket-details">
+                            <h3>Billet de réservation</h3>
+                            <div class="ticket-meta">
+                                <p><strong>Client :</strong> ${clientName}</p>
+                                <p><strong>Match :</strong> ${matchTeams}</p>
+                                <p><strong>Stade :</strong> ${matchVenue}</p>
+                                <p><strong>Heure :</strong> ${matchTime}</p>
+                                <p><strong>Place attribuée :</strong> ${seatNumber}</p>
+                            </div>
+                            <p class="reservation-note">Ce billet affiche le nom du client et la place est tirée au sort parmi 10&nbsp;000 sièges.</p>
+                        </div>
+                        <div class="qr-code" aria-label="QR code de la réservation"></div>
+                    </article>
+                `;
+
+                const qrContainer = ticketWrapper.querySelector('.qr-code');
+                if (qrContainer) {
+                    qrContainer.appendChild(qrCanvas);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <title>FIFA 2026 - Offizielle Plattform</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="">
     
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,96 +16,84 @@
         
         <header class="site-header">
             <nav class="nav-container" aria-label="Hauptnavigation">
-                <button class="nav-button" aria-label="Navigationsmenü öffnen">
-                    <i class="fa-solid fa-bars" aria-hidden="true"></i>
-                </button>
-                
                 <div class="site-logo">
                     FIFA <span class="logo-highlight">2026</span>
                 </div>
-                
-                <button class="nav-button" aria-label="Suche öffnen">
-                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+
+                <button id="menu-toggle" class="nav-button" aria-expanded="false" aria-controls="menu">
+                    <span class="icon">☰</span>
+                    <span class="sr-only">Navigationsmenü öffnen</span>
                 </button>
+
+                <ul id="menu" class="nav-menu" hidden>
+                    
+                    <li><a href="Spielplan.html">Spielplan</a></li>
+                    <li><a href="info.html">About</a></li>
+                    <li><a href="Quiz.html">Quiz</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
             </nav>
         </header>
 
         <main class="hero-content">
-            <div class="hero-background" aria-hidden="true"></div>
-            
             <div class="hero-inner">
-                <p class="badge-promo">LIVE FROM NORTH AMERICA</p>
+                <h1 class="badge-promo">WELCOME TO THE FIFA FOOTBALL WORLDCUP 2026</h1>
                 
                 <h1 class="hero-title">
                     UNITED FOR THE <br>
                     <span class="text-neon">GREATEST</span> GAME
                 </h1>
                 
-                <section class="countdown-wrapper" aria-label="Countdown bis zum Event">
-                    <div class="countdown-unit">
-                        <span class="countdown-value">724</span>
-                        <span class="countdown-label">DAYS</span>
-                    </div>
-                    <span class="countdown-separator" aria-hidden="true">:</span>
-                    <div class="countdown-unit">
-                        <span class="countdown-value">14</span>
-                        <span class="countdown-label">HOURS</span>
-                    </div>
-                    <span class="countdown-separator" aria-hidden="true">:</span>
-                    <div class="countdown-unit">
-                        <span class="countdown-value">28</span>
-                        <span class="countdown-label">MINS</span>
-                    </div>
-                </section>
+               
 
                 <div class="action-controls">
                     <a href="tickets.html" class="btn btn-primary">
-                        <i class="fa-solid fa-ticket" aria-hidden="true"></i> GET TICKETS
+                        <span class="icon">🎫</span> GET TICKETS
                     </a>
-                    <a href="#" class="btn btn-secondary">
-                        <i class="fa-regular fa-circle-play" aria-hidden="true"></i> WATCH TEASER
-                    </a>
+                    <button id="watch-teaser" type="button" class="btn btn-secondary">
+                        <span class="icon">▶</span> WATCH TEASER
+                    </button>
                 </div>
             </div>
         </main>
 
         <section class="info-grid" aria-label="Informationen und Services">
             
-            <a href="Spielplan.html" class="card-button" aria-label="Zum Spielplan wechseln">
+            <button type="button" onclick="location.href='Spielplan.html'" class="card-button" aria-label="Zum Spielplan wechseln">
                 <article class="info-card">
                     <div class="card-icon icon-blue" aria-hidden="true">
-                        <i class="fa-regular fa-calendar-days"></i>
+                        <span class="icon">📅</span>
                     </div>
                     <div class="card-text">
                         <h2>SPIELPLAN</h2>
                         <p>Verpassen Sie kein Match: Alle Termine, Gruppen und Stadien der WM 2026 im Überblick.</p>
                     </div>
                 </article>
-            </a>
+            </button>
 
-            <a href="info.html" class="card-button" aria-label="Zu den Informationen wechseln">
+            <button type="button" onclick="location.href='info.html'" class="card-button" aria-label="Zu den Informationen wechseln">
                 <article class="info-card">
                     <div class="card-icon icon-neon-bg" aria-hidden="true">
-                        <i class="fa-solid fa-map-pin"></i>
+                        <span class="icon">📍</span>
                     </div>
                     <div class="card-text">
                         <h2>INFO</h2>
                         <p>Alles über die Austragungsorte, das neue Turniersystem und die Teams der Weltmeisterschaft.</p>
                     </div>
                 </article>
-            </a>
+            </button>
 
-            <a href="Quiz.html" class="card-button" aria-label="Zum Quiz wechseln">
+            <button type="button" onclick="location.href='Quiz.html'" class="card-button" aria-label="Zum Quiz wechseln">
                 <article class="info-card">
                     <div class="card-icon icon-gray" aria-hidden="true">
-                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="icon">🛍️</span>
                     </div>
                     <div class="card-text">
                         <h2>QUIZ</h2>
                         <p>Nehmen Sie an unserem Quiz teil und gewinnen Sie tolle Preise und Geschenke.</p>
                     </div>
                 </article>
-            </a>
+            </button>
 
         </section>
 
@@ -114,6 +102,34 @@
         </footer>
 
     </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const watchButton = document.getElementById('watch-teaser');
+            const videoContainer = document.getElementById('video-container');
+            const videoFrame = document.getElementById('teaser-video');
+            const videoUrl = 'https://www.youtube.com/embed/ZTdOX1U2K0Q?si=totFBb63-wIMbT6p';
+            let open = false;
+
+            watchButton?.addEventListener('click', () => {
+                if (!videoFrame || !videoContainer) return;
+
+                open = !open;
+                if (open) {
+                    videoFrame.src = videoUrl;
+                    videoContainer.hidden = false;
+                    videoContainer.classList.add('active');
+                    watchButton.textContent = 'FERMER TEASER';
+                } else {
+                    videoFrame.src = '';
+                    videoContainer.hidden = true;
+                    videoContainer.classList.remove('active');
+                    watchButton.innerHTML = '<span class="icon">▶</span> WATCH TEASER';
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

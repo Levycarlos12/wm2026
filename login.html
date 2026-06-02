@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 2026 - Login</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="grid-container">
+        
+        <header class="site-header">
+            <nav class="nav-container" aria-label="Hauptnavigation">
+                <div class="site-logo">
+                    FIFA <span class="logo-highlight">2026</span>
+                </div>
+
+                <button id="menu-toggle" class="nav-button" aria-expanded="false" aria-controls="menu">
+                    <span class="icon">☰</span>
+                    <span class="sr-only">Navigationsmenü öffnen</span>
+                </button>
+
+                <ul id="menu" class="nav-menu" hidden>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="info.html">About</a></li>
+                    <li><a href="Spielplan.html">Spielplan</a></li>
+                    <li><a href="Quiz.html">Quiz</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main-content" style="display: flex; align-items: center; justify-content: center; padding: 40px 20px;">
+            
+            <section class="booking-container" style="width: 100%; max-width: 450px;">
+                <h2>ANMELDEN</h2>
+                <p class="booking-subtitle">Geben Sie Ihre Daten ein, um fortzufahren.</p>
+                
+                <form id="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="login-email">E-Mail-Adresse:</label>
+                        <input type="email" id="login-email" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Passwort:</label>
+                        <input type="password" id="login-password" placeholder="Ihr Passwort" required>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <span class="icon">🔑</span> EINLOGGEN
+                    </button>
+                </form>
+                
+                <p style="margin-top: 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                    Noch kein Konto? <a href="registrierung.html" style="color: var(--neon); text-decoration: none; font-weight: 600;">Konto erstellen</a>
+                </p>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2026 FIFA. Akademisches Projekt - Alle Rechte vorbehalten.</p>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
