@@ -745,3 +745,55 @@ body.video-active .video-fullscreen {
 }
 
 /*--- tickets--*/
+
+
+/* ===== INFO PAGE ===== */
+
+.history-timeline {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.history-timeline h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text);
+}
+
+.history-timeline .info-card {
+    margin-bottom: 1rem;
+}
+
+.top-nations {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.top-nations h2 {
+    margin-bottom: 1rem;
+}
+
+.top-nations table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.top-nations th {
+    background-color: var(--neon);
+    color: #000;
+    padding: 1rem;
+    text-align: left;
+}
+
+.top-nations td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.top-nations tr:last-child td {
+    border-bottom: none;
+}
