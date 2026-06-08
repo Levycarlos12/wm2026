@@ -51,6 +51,10 @@
                             <label for="client-name">Nom du client</label>
                             <input type="text" id="client-name" name="client-name" placeholder="Entrez votre nom" required>
                         </div>
+                        <div class="form-group">
+                            <label for="client-email">Adresse e-mail</label>
+                            <input type="email" id="client-email" name="client-email" placeholder="Entrez votre e-mail" required>
+                        </div>
                         <button type="submit" class="btn-submit">Mein Ticket erstellen</button>
                     </form>
 
@@ -149,7 +153,53 @@
             return String(value).padStart(4, '0');
         }
 
+        function initEmailJS() {
+            return true;
+        }
+
+        async function sendTicketEmail(clientEmail, clientName, matchTeams, matchVenue, matchTime, seatNumber, qrDataUrl) {
+            // EmailJS config — replace these with your real values or set window.EMAILJS_* globals before the script runs
+            const serviceId = window.EMAILJS_SERVICE_ID || 'service_z5c82kg';
+            const templateId = window.EMAILJS_TEMPLATE_ID || 'template_r8rm9p8';
+            const userId = window.EMAILJS_USER_ID || 'oYFpiTuwFE92Hbjwa';
+
+            const payload = {
+                service_id: serviceId,
+                template_id: templateId,
+                user_id: userId,
+                template_params: {
+                    to_email: clientEmail,
+                    client_name: clientName,
+                    match_teams: matchTeams,
+                    match_venue: matchVenue,
+                    match_time: matchTime,
+                    seat_number: seatNumber,
+                    qrDataUrl: qrDataUrl || ''
+                }
+            };
+
+            try {
+                const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    console.log('Email envoyé avec succès via EmailJS');
+                    return true;
+                }
+
+                const err = await response.text();
+                console.error('EmailJS error:', err);
+            } catch (e) {
+                console.error('Erreur envoi email:', e);
+            }
+            return false;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            initEmailJS();
             const matchTeams = getQueryParam('teams');
             const matchVenue = getQueryParam('venue');
             const matchTime = getQueryParam('time');
@@ -159,6 +209,7 @@
             const matchTimeEl = document.getElementById('match-time');
             const reservationForm = document.getElementById('reservation-form');
             const clientNameInput = document.getElementById('client-name');
+            const clientEmailInput = document.getElementById('client-email');
             const ticketWrapper = document.getElementById('ticket-card-wrapper');
 
             if (!matchTeams || !matchVenue || !matchTime) {
@@ -174,31 +225,40 @@
             reservationForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 const clientName = clientNameInput.value.trim();
+                const clientEmail = clientEmailInput?.value.trim() || '';
 
                 if (!clientName) {
-                    errorMessage.textContent = 'Veuillez saisir le nom du client pour générer le billet.';
+                    errorMessage.textContent = 'Geben Sie Ihren Namen ein, um fortzufahren.';
+                    return;
+                }
+
+                if (!clientEmail) {
+                    errorMessage.textContent = 'Geben Sie Ihre E-Mail-Adresse ein, um Ihr Ticket zu erhalten.';
                     return;
                 }
 
                 errorMessage.textContent = '';
                 const seatNumber = formatSeatNumber(Math.floor(Math.random() * 10000) + 1);
-                const ticketContent = `${clientName}|${matchTeams}|${matchVenue}|${matchTime}|SIÈGE ${seatNumber}`;
+                const ticketContent = `${clientName}|${clientEmail}|${matchTeams}|${matchVenue}|${matchTime}|SIÈGE ${seatNumber}`;
                 const qrCanvas = createQrCanvas(ticketContent);
 
+                const qrDataUrl = qrCanvas.toDataURL();
+                // render ticket first with a placeholder status; update status after email attempt
                 ticketWrapper.innerHTML = `
-                    <article class="reservation-card">
+                    <article class="reservation-card ticket-id-card">
                         <div class="ticket-details">
-                            <h3>Billet de réservation</h3>
+                            <div class="ticket-label">FIFA 2026</div>
+                            <h3>${clientName}</h3>
+                            <p class="ticket-role">Inhaber des Tickets</p>
                             <div class="ticket-meta">
-                                <p><strong>Client :</strong> ${clientName}</p>
                                 <p><strong>Match :</strong> ${matchTeams}</p>
                                 <p><strong>Stade :</strong> ${matchVenue}</p>
                                 <p><strong>Heure :</strong> ${matchTime}</p>
-                                <p><strong>Place attribuée :</strong> ${seatNumber}</p>
+                                <p><strong>Platz :</strong> ${seatNumber}</p>
                             </div>
-                            <p class="reservation-note">Ce billet affiche le nom du client et la place est tirée au sort parmi 10&nbsp;000 sièges.</p>
+                            <p class="reservation-note" id="send-status" style="color: #999; margin-top: 12px;">Ticket génériert — envoi de l'e-mail en cours...</p>
                         </div>
-                        <div class="qr-code" aria-label="QR code de la réservation"></div>
+                        <div class="qr-code" aria-label="QR-Code der Reservierung"></div>
                     </article>
                 `;
 
@@ -206,6 +266,30 @@
                 if (qrContainer) {
                     qrContainer.appendChild(qrCanvas);
                 }
+
+                // clear previous error messages
+                errorMessage.textContent = '';
+
+                // attempt to send email and update the status element accordingly
+                sendTicketEmail(clientEmail, clientName, matchTeams, matchVenue, matchTime, seatNumber, qrDataUrl)
+                    .then(sent => {
+                        const statusEl = ticketWrapper.querySelector('#send-status');
+                        if (!statusEl) return;
+                        if (sent) {
+                            statusEl.style.color = '#00ff88';
+                            statusEl.textContent = `✓ E-Mail envoyée à ${clientEmail}.`;
+                        } else {
+                            statusEl.style.color = '#ff6666';
+                            statusEl.textContent = 'L’envoi de l’e-mail a échoué. Le ticket a été généré sur la page.';
+                        }
+                    })
+                    .catch(err => {
+                        const statusEl = ticketWrapper.querySelector('#send-status');
+                        if (statusEl) {
+                            statusEl.style.color = '#ff6666';
+                            statusEl.textContent = 'L’envoi de l’e-mail a échoué (erreur réseau). Le ticket a été généré sur la page.';
+                        }
+                    });
             });
         });
     </script>

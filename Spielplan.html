@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css">
    
 </head>
-<body>
+<body class="spielplan-page">
      <div class="grid-container">
         <header class="site-header">
             <nav class="nav-container" aria-label="Hauptnavigation">
@@ -43,7 +43,7 @@
                             <p>Sichern Sie ihre Tickets für WM2026.</p>
                       </section>
 
-                      <section class="matches-container"  aria-label="WM 2026 Begegnungen">
+                      <section class="matches-table" aria-label="WM 2026 Begegnungen">
 
 
 
@@ -1420,14 +1420,26 @@
 
         matchButtons.forEach((button) => {
             button.addEventListener('click', () => {
-                const row = button.closest('.table-row');
-                if (!row) return;
+                const article = button.closest('.table-row');
+                if (!article) {
+                    console.error('Article not found');
+                    return;
+                }
 
-                const teams = Array.from(row.querySelectorAll('.team-badge'))
-                    .map((badge) => badge.textContent.trim())
+                const teamBadges = article.querySelectorAll('.col-teams .team-badge');
+                const teams = Array.from(teamBadges)
+                    .map(badge => badge.textContent.trim())
                     .join(' vs ');
-                const venue = row.querySelector('.col-venue .text-truncate')?.textContent.trim() || '';
-                const time = row.querySelector('.col-time span:last-child')?.textContent.trim() || '';
+
+                const venueEl = article.querySelector('.col-venue .text-truncate');
+                const venue = venueEl ? venueEl.textContent.trim() : 'Unknown';
+
+                const timeEl = article.querySelector('.col-time span:not(.icon)');
+                const time = timeEl ? timeEl.textContent.trim() : 'Unknown';
+
+                console.log('Teams:', teams);
+                console.log('Venue:', venue);
+                console.log('Time:', time);
 
                 const params = new URLSearchParams({
                     teams,
