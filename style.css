@@ -33,7 +33,7 @@ body {
 }
 
 body.spielplan-page {
-    background-image: linear-gradient(rgba(10, 10, 15, 0.75), rgba(10, 10, 15, 0.75)), url('img/Gruppenphase.webp');
+    background-image: linear-gradient(rgba(10, 10, 15, 0.35), rgba(10, 10, 15, 0.35)), url('img/la-primera-fase-esta-en-marcha.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -421,7 +421,8 @@ body.video-active .video-fullscreen {
 }
 
 .info-card {
-    background-color: var(--bg-card);
+    background-color: rgba(22, 27, 34, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     border-radius: 12px;
     padding: 1.25rem;
     display: flex; /* FLEXBOX n°6 (Aligne l'icône à gauche du texte) */
@@ -429,6 +430,7 @@ body.video-active .video-fullscreen {
     position: relative;
     cursor: pointer;
     overflow: visible;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
 }
 
 .card-popup {
@@ -499,14 +501,15 @@ body.video-active .video-fullscreen {
 
 .card-text h2 {
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 0.3rem;
+    color: #ffffff;
 }
 
 .card-text p {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.9rem;
+    line-height: 1.6;
 }
 
 .site-footer {
@@ -543,7 +546,7 @@ body.video-active .video-fullscreen {
 /* --- Variables --- */
 /* DE: Variablen speziell für Spielplan/Ticket-Seiten */
 :root {
-    --neon: #00ffcc;
+    --neon: #10e496f9;
     --bg-dark: #0d1117;
     --card-dark: #161b22;
     --border-dark: #30363d;
