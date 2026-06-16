@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIFA 2026 - Offizielle Plattform</title>
+    <title>FIFA World Cup 2026 | Official Fan Portal</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="">
+    <meta name="description" content="Experience the FIFA World Cup 2026. Get interactive match schedules, host city details, fan quizzes, and exclusive football news.">
+    <meta name="keywords" content="FIFA, World Cup 2026, Football, Match Schedule, Host Cities, Quiz, Soccer, Tournament">
+    <meta name="author" content="Your Name">
+    
+    <meta property="og:title" content="FIFA World Cup 2026 | Official Fan Portal">
+    <meta property="og:description" content="Official schedules, tournament updates, and interactive fan games for the 2026 World Cup.">
+    <meta property="og:image" content="assets/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,173 +22,195 @@
 
     <div class="grid-container">
         
-        <header class="site-header">
-            <nav class="nav-container" aria-label="Hauptnavigation">
-                <div class="site-logo">
-                    FIFA <span class="logo-highlight">2026</span>
-                </div>
-
-                <button id="menu-toggle" class="nav-button" aria-expanded="false" aria-controls="menu">
-                    <span class="icon">☰</span>
-                    <span class="sr-only">Navigationsmenü öffnen</span>
-                </button>
-
-                <ul id="menu" class="nav-menu" hidden>
-                    
-                    <li><a href="Spielplan.html">Spielplan</a></li>
-                    <li><a href="info.html">Geschichte</a></li>
-                    <li><a href="Quiz.html">Quiz</a></li>
-                    <li><a href="login.html">Login</a></li>
+        <header class="main-header">
+            <div class="logo">
+                <a href="index.html"> FIFA WORLD CUP <span class="year">2026</span></a>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list" id="js-nav-list">
+                    <li><a href="index.html" class="active">HOME</a></li>
+                    <li><a href="Spielplan.html">MATCHES</a></li>
+                    <li><a href="games.html">QUIZ</a></li>
+                    <li><a href="info.html">GESCHICHTE</a></li>
+                     <li><a href="finalphase.html">TOURNAMEENT INFO</a></li>
                 </ul>
             </nav>
+            
+            <button class="menu-toggle" id="js-burger" aria-label="Open navigation menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </header>
 
-        <main class="hero-content">
-            <div class="hero-inner">
-                <h1 class="badge-promo">WELCOME TO THE FIFA FOOTBALL WORLDCUP 2026</h1>
-                
-                <h1 class="hero-title">
-                    UNITED FOR THE <br>
-                    <span class="text-neon">GREATEST</span> GAME
-                </h1>
-                
-               
-
-                <div class="action-controls">
-                    <a href="tickets.html" class="btn btn-primary">
-                        <span class="icon">🎫</span> GET TICKETS
-                    </a>
-                    <button id="watch-teaser" type="button" class="btn btn-secondary">
-                        <span class="icon">▶</span> WATCH TEASER
-                    </button>
+        <main class="main-content">
+            
+            <section class="hero-section">
+                <div class="hero-overlay">
+                    <h1>FIFA World Cup 2026</h1>
+                    <p>The greatest football tournament on Earth begins now. Track your team, challenge your knowledge, and live the game.</p>
                 </div>
+                <div class="video-container">
+    <iframe width="560" height="315" 
+            src="https://www.youtube.com/embed/ejuiCkS7xXE?autoplay=1&mute=1&si=3vjtlOLCC1rIgcCD" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+    </iframe>
+</div>
+            </section>
 
-                <div class="countdown-wrapper" id="countdown-timer" aria-label="Countdown jusqu'au début">
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="countdown-days">00</span>
-                        <span class="countdown-label">Tages</span>
-                    </div>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="countdown-hours">00</span>
-                        <span class="countdown-label">Stunden</span>
-                    </div>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="countdown-minutes">00</span>
-                        <span class="countdown-label">Minuten</span>
-                    </div>
-                    <div class="countdown-unit">
-                        <span class="countdown-value" id="countdown-seconds">00</span>
-                        <span class="countdown-label">Sekunden</span>
-                    </div>
+            <section class="ball-feature-container ball-neon-layout">
+                <div class="ball-image-box">
+                    <img src="img/ball and cup.webp" alt="Official World Cup match ball and trophy on the pitch">
                 </div>
-            </div>
+                
+                <div class="ball-text-box neon-border">
+                    <span class="tag">Innovation</span>
+                    <h2>The 2026 Connected Ball Technology</h2>
+                    <p>
+                        Step into the future of football. The official 2026 match ball is not just a sphere, but a highly sophisticated data hub. 
+                        Suspended at its center is a groundbreaking 500Hz Connected Ball Technology sensor that sends spatial data to video referees 500 times per second. 
+                        By pinpointing the exact moment the ball is kicked, it works hand-in-hand with semi-automated offside cameras to deliver instant, millimeter-accurate decisions.
+                    </p>
+                    <p style="margin-top: 0.8rem;">
+                        On the outside, the state-of-the-art Speedshell exterior features 20 thermally bonded panels. 
+                        Its micro-textured surface mimics golf-ball dimples, eliminating unpredictable flight paths and ensuring ultimate flight stability, speed, and waterproof performance on the pitch.
+                    </p> 
+                </div>
+            </section>
+
+            <h1 class="gruppen"> Die 12 Gruppen der FIFA WM 2026</h1>
+            <br>
+            <p class="world-cup-groups">
+                <strong>Group A:</strong>  Mexico, Südafrika, Südkorea, Tschechien <br>
+                <strong>Group B:</strong>  Kanada, Bosnien und Herzegowina, Katar, Schweiz<br>
+                <strong>Group C:</strong>  Brasilien, Marokko, Haiti, Schottland<br>
+                <strong>Group D:</strong>  USA, Paraguay, Australien, Türkei <br>
+                <strong>Group E:</strong>  Deutschland, Curaçao, Elfenbeinküste, Ecuador  <br>
+                <strong>Group F:</strong>  Niederlande, Japan, Schweden, Tunesien<br>
+                <strong>Group G:</strong>  Belgien, Ägypten, IR Iran, Neuseeland <br>
+                <strong>Group H:</strong>  Spanien, Kap Verde, Saudi-Arabien, Uruguay <br>
+                <strong>Group I:</strong>  Frankreich, Senegal, Irak, Norwegen <br>
+                <strong>Group J:</strong>  Argentinien, Algerien, Österreich, Jordanien<br>
+                <strong>Group K:</strong>  Portugal, DR Kongo, Usbekistan, Kolumbien <br>
+                <strong>Group L:</strong>  England, Kroatien, Ghana, Panama<br>
+            </p>
+            
+            <section class="news-section">
+                <h2>Latest Tournament News</h2>
+                <div class="news-grid" id="js-news-grid">
+                    
+                    <article class="news-card">
+                        <div class="press-carousel">
+                            <div class="press-slide">
+                                <img src="img/press-conference1.jpg" alt="Team manager speaking at the official press conference">
+                            </div>
+                            <div class="press-slide">
+                                <img src="img/press-conference2.jpg" alt="Players answering media questions behind microphones">
+                            </div>
+                            <div class="press-slide">
+                                <img src="img/press-conference3.jpg" alt="National team coach discussing tactics in front of journalists">
+                            </div>
+                            <div class="press-slide">
+                                <img src="img/press-conference4.jpg" alt="Media zone interview session before the match">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="category">Media</span>
+                            <h3>Team Press Conferences</h3>
+                            <p>Follow live interviews, tactical insights, and direct statements from national team coaches and players.</p>
+                            <br>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/exRus2jv0Mc?si=kgTzeyEYEVNPvUUn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </article>
+                    
+                    <article class="news-card">
+                        <div class="stadium-images-container">
+                            <div class="stadium-item">
+                                <img src="img/Azteca Stadium in Mexico.jpg" alt="Azteca Stadium in Mexico">
+                            </div>
+                            <div class="stadium-item">
+                                <img src="img/MetLife Stadium in New York New Jersey.jpg" alt="MetLife Stadium in New York New Jersey">
+                            </div>
+                            <div class="stadium-item">
+                                <img src="img/BC Place in Vancouver.jpg" alt="BC Place in Vancouver">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <span class="category">Host Cities</span>
+                            <h3>Stadium Preparations Complete</h3>
+                            <p><ul class="stadiums-list">
+    <!-- WEST REGION -->
+    <li>
+        <strong>Westzone (West Region)</strong>
+        <ul>
+            <li><strong>BC Place (Vancouver, Kanada)</strong>: 54.000 Plätze — Bekannt für sein weltweit größtes kabelgetragenes fahrbares Dach. Hier findet das allererste WM-Endrundenspiel der kanadischen Herren-Nationalmannschaft statt.</li>
+            <li><strong>Lumen Field (Seattle, USA)</strong>: 69.000 Plätze — Gilt aufgrund seiner wellenförmigen Dachstruktur, die den Schall direkt auf den Platz zurückwirft, als eines der lautesten Stadien der Welt.</li>
+            <li><strong>Levi's Stadium (San Francisco, USA)</strong>: 68.500 Plätze — Ein Vorreiter in Sachen Nachhaltigkeit (LEED-Gold-Zertifizierung), ausgestattet mit einem begrünten Dach und Solaranlagen.</li>
+            <li><strong>SoFi Stadium (Los Angeles, USA)</strong>: 70.000 Plätze — Ein hochmodernes Stadion mit einem riesigen, doppelseitigen Videoschirm über dem Spielfeld. Austragungsort des ersten US-Gruppenspiels am 12. Juni.</li>
+        </ul>
+    </li>
+
+    <!-- CENTRAL REGION -->
+    <li>
+        <strong>Zentralzone (Central Region)</strong>
+        <ul>
+            <li><strong>Estadio Guadalajara (Guadalajara, Mexiko)</strong>: 48.000 Plätze — Die markante Außenarchitektur ist einem grünen Vulkan nachempfunden, dessen Krone von einem weißen Dach gebildet wird.</li>
+            <li><strong>Estadio Monterrey (Monterrey, Mexiko)</strong>: 53.500 Plätze — Spitzname „Der Stahlriese“ (El Gigante de Acero). Seine metallische Struktur bietet einen spektakulären Blick auf das umliegende Gebirge.</li>
+            <li><strong>Estadio Azteca (Mexiko-Stadt, Mexiko)</strong>: 83.000 Plätze — Ein historischer Tempel des Weltfußballs. Es ist das erste Stadion weltweit, das bei drei Weltmeisterschaften (1970, 1986, 2026) zum Einsatz kommt. Ort des offiziellen Eröffnungsspiels am 11. Juni.</li>
+            <li><strong>AT&T Stadium (Dallas, USA)</strong>: 94.000 Plätze — Ein gigantischer Kuppelbau mit einer monumentalen, 55 Meter langen Videowand. In diesem Stadion finden mit insgesamt 9 Partien die meisten Spiele des Turniers statt, darunter ein Halbfinale.</li>
+            <li><strong>NRG Stadium (Houston, USA)</strong>: 72.000 Plätze – Das erste NFL-Stadion, das mit einem komplett verschließbaren, lichtdurchlässigen Dach gebaut wurde.</li>
+            <li><strong>Arrowhead Stadium (Kansas City, USA)</strong>: 76.000 Plätze — Ein legendäres Open-Air-Stadion, das für die ohrenbetäubende Atmosphäre in seinen schüsselförmigen Betontribünen berühmt ist.</li>
+        </ul>
+    </li>
+
+    <!-- EAST REGION -->
+    <li>
+        <strong>Ostzone (East Region)</strong>
+        <ul>
+            <li><strong>Mercedes-Benz Stadium (Atlanta, USA)</strong>: 71.000 Plätze — Ausgestattet mit einem einzigartigen Dach, das sich wie die Blende einer Kamera öffnet, und einer 360-Grad-Videowand. Hier wird ein Halbfinale ausgetragen.</li>
+            <li><strong>Hard Rock Stadium (Miami, USA)</strong>: 65.000 Plätze — Modernisiertes Mehrzweckstadion mit einer großen Überdachung zum Schutz der Fans vor der Sonne Floridas. Ort des Spiels um Platz 3.</li>
+            <li><strong>BMO Field (Toronto, Kanada)</strong>: 45.000 Plätze — Das kleinste Stadion des Turniers, das extra für die WM erweitert wurde und für eine sehr dichte, englische Stadionatmosphäre sorgt.</li>
+            <li><strong>Gillette Stadium (Boston, USA)</strong>: 66.000 Plätze — Eingebettet in einen großen Unterhaltungskomplex und unverkennbar durch den markanten Leuchtturm hinter der Fankurve.</li>
+            <li><strong>Lincoln Financial Field (Philadelphia, USA)</strong>: 69.000 Plätze — Ein modernes Open-Air-Stadion, das durch offene Ecken in den Tribünen einen beeindruckenden Blick auf die Skyline der Stadt bietet.</li>
+            <li><strong>MetLife Stadium (New York NJ, USA)</strong>: 82.500 Plätze — Der Gigant aus Glas und Stahl vor den Toren New Yorks wurde von der FIFA offiziell als Austragungsort für das große WM-Finale am 19. Juli ausgewählt.</li>
+        </ul>
+    </li>
+</ul></p>
+                        </div>
+                    </article>
+
+                    <!-- ENCASTRÉ : ID ajoutés pour l'injection automatique de l'API -->
+                    <article class="news-card">
+                        <img id="js-live-news-img" src="assets/news-teams.jpg" alt="Football players celebrating a goal on the pitch">
+                        <div class="card-content">
+                            <span id="js-live-news-cat" class="category">Teams</span>
+                            <h3 id="js-live-news-title">Final 48 Group Draw Announced</h3>
+                            <p id="js-live-news-desc">Analyze the full group stage breakdown and predict who will advance to the knockout rounds.</p>
+                            <a id="js-live-news-link" href="#" target="_blank" class="read-more-link" style="display: none;">Read Article →</a>
+                        </div>
+                    </article>
+                    
+                </div>
+            </section>
+            
         </main>
 
-        <section class="info-grid" aria-label="Informationen und Services">
-            
-            <button type="button" onclick="location.href='Spielplan.html'" class="card-button" aria-label="Zum Spielplan wechseln">
-                <article class="info-card">
-                    <div class="card-icon icon-blue" aria-hidden="true">
-                        <span class="icon">📅</span>
-                    </div>
-                    <div class="card-text">
-                        <h2>SPIELPLAN</h2>
-                        <p>Verpassen Sie kein Match: Alle Termine, Gruppen und Stadien der WM 2026 im Überblick.</p>
-                    </div>
-                </article>
-            </button>
-
-            <button type="button" onclick="location.href='info.html'" class="card-button" aria-label="Zu den Informationen wechseln">
-                <article class="info-card">
-                    <div class="card-icon icon-neon-bg" aria-hidden="true">
-                        <span class="icon">📍</span>
-                    </div>
-                    <div class="card-text">
-                        <h2>INFO</h2>
-                        <p>Alles über die Austragungsorte, das neue Turniersystem und die Teams der Weltmeisterschaft.</p>
-                    </div>
-                </article>
-            </button>
-
-            <button type="button" onclick="location.href='Quiz.html'" class="card-button" aria-label="Zum Quiz wechseln">
-                <article class="info-card">
-                    <div class="card-icon icon-gray" aria-hidden="true">
-                        <span class="icon">🛍️</span>
-                    </div>
-                    <div class="card-text">
-                        <h2>QUIZ</h2>
-                        <p>Nehmen Sie an unserem Quiz teil und gewinnen Sie tolle Preise und Geschenke.</p>
-                    </div>
-                </article>
-            </button>
-
-        </section>
-
-        <footer class="site-footer">
-            <p>&copy; 2026 FIFA. Akademisches Projekt - Alle Rechte vorbehalten.</p>
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2026 World Cup Fan Portal Project. Academic Assignment - Not affiliated with FIFA.</p>
+            </div>
         </footer>
-
+        
     </div>
 
     <script src="script.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const watchButton = document.getElementById('watch-teaser');
-            const videoContainer = document.getElementById('video-container');
-            const videoFrame = document.getElementById('teaser-video');
-            const videoUrl = 'https://www.youtube.com/embed/ZTdOX1U2K0Q?si=totFBb63-wIMbT6p';
-            let open = false;
-
-            watchButton?.addEventListener('click', () => {
-                if (!videoFrame || !videoContainer) return;
-
-                open = !open;
-                if (open) {
-                    videoFrame.src = videoUrl;
-                    videoContainer.hidden = false;
-                    videoContainer.classList.add('active');
-                    watchButton.textContent = 'FERMER TEASER';
-                } else {
-                    videoFrame.src = '';
-                    videoContainer.hidden = true;
-                    videoContainer.classList.remove('active');
-                    watchButton.innerHTML = '<span class="icon">▶</span> WATCH TEASER';
-                }
-            });
-
-            const countdownTarget = new Date(Date.UTC(2026, 5, 11, 23, 0, 0)); // 11 juin 2026 23:00 GMT
-            const daysEl = document.getElementById('countdown-days');
-            const hoursEl = document.getElementById('countdown-hours');
-            const minutesEl = document.getElementById('countdown-minutes');
-            const secondsEl = document.getElementById('countdown-seconds');
-
-            function updateCountdown() {
-                const now = new Date();
-                const diff = countdownTarget.getTime() - now.getTime();
-
-                if (diff <= 0) {
-                    daysEl.textContent = '00';
-                    hoursEl.textContent = '00';
-                    minutesEl.textContent = '00';
-                    secondsEl.textContent = '00';
-                    return;
-                }
-
-                const seconds = Math.floor(diff / 1000) % 60;
-                const minutes = Math.floor(diff / (1000 * 60)) % 60;
-                const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-                daysEl.textContent = String(days).padStart(2, '0');
-                hoursEl.textContent = String(hours).padStart(2, '0');
-                minutesEl.textContent = String(minutes).padStart(2, '0');
-                secondsEl.textContent = String(seconds).padStart(2, '0');
-            }
-
-            updateCountdown();
-            setInterval(updateCountdown, 1000);
-        });
-    </script>
-
+    <!-- Utilise bien actuapi.js comme tu l'as nommé -->
+    <script src="actuapi.js"></script>
+    
 </body>
 </html>

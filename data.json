@@ -1,0 +1,36 @@
+[
+  {
+    "nomGroupe": "GRUPPE E",
+    "matchs": [
+      {
+        "date": "Mo. 15.06.2026 // 01:00 Uhr",
+        "lieu": "Philadelphia",
+        "equipeHome": "Elfenbeinküste",
+        "drapeauHome": "ci",
+        "equipeAway": "Ecuador",
+        "drapeauAway": "ec"
+      },
+      {
+        "date": "So. 14.06.2026 // 19:00 Uhr",
+        "lieu": "Houston",
+        "equipeHome": "Deutschland",
+        "drapeauHome": "de",
+        "equipeAway": "Curaçao",
+        "drapeauAway": "cw"
+      }
+    ]
+  },
+  {
+    "nomGroupe": "GRUPPE F",
+    "matchs": [
+      {
+        "date": "Di. 16.06.2026 // 15:00 Uhr",
+        "lieu": "Los Angeles",
+        "equipeHome": "France",
+        "drapeauHome": "fr",
+        "equipeAway": "Marokko",
+        "drapeauAway": "ma"
+      }
+    ]
+  }
+]

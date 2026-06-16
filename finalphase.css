@@ -1,0 +1,282 @@
+:root {
+    --bg-dark: #0d1b2a;
+    --panel-bg: rgba(16, 28, 44, 0.95);
+    --text-light: #ffffff;
+    --accent-orange: #e67e22;
+    --group-header-bg: #1b263b;
+    --border-color: #415a77;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 10px;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    background-image: url('img/football-pattern.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.main-container {
+    max-width: 1600px;
+    margin: 0 auto;
+    border: 2px solid var(--border-color);
+    padding: 15px;
+    background: linear-gradient(180deg, #112233 0%, #050b14 100%);
+    border-radius: 8px;
+    border-radius: 8px;
+    background-color: rgba(10, 20, 30, 0.7);
+}
+
+/* HEADER */
+.main-header {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--accent-orange);
+    padding-bottom: 10px;
+}
+
+.main-header h1 {
+    font-size: 2rem;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.dates {
+    font-size: 1.2rem;
+    color: var(--accent-orange);
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+/* GRILLE PRINCIPALE (Desktop par défaut) */
+.content-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr 320px;
+    gap: 20px;
+}
+
+.column-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* BLOCS DE GROUPES */
+.group-card {
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.group-header {
+    background-color: var(--group-header-bg);
+    color: var(--accent-orange);
+    padding: 8px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.match-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.match-time {
+    font-size: 10px;
+    color: #a0aec0;
+    width: 75px;
+}
+
+.team-inputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.team-name {
+    width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.score-box {
+    width: 22px;
+    height: 20px;
+    background: #2c3e50;
+    border: 1px solid var(--border-color);
+    color: white;
+    text-align: center;
+    font-size: 11px;
+}
+
+/* CENTRE : STADES & PHASES FINALES */
+.center-stage {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.map-section {
+    height: 220px;
+    background: #1b263b;
+    border: 1px dashed var(--accent-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.ko-row {
+    background: rgba(0,0,0,0.4);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.ko-row h3 {
+    margin: 0 0 10px 0;
+    color: var(--accent-orange);
+    font-size: 13px;
+    text-align: center;
+}
+
+.slots {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+/* Grilles responsives pour la phase finale */
+.slots-grid-8 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.slots-grid-16 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.match-slot {
+    height: 35px;
+    background: #1b263b;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    width: 100%;
+}
+
+.match-slot.big {
+    height: 50px;
+    max-width: 300px;
+    margin: 0 auto;
+    background: linear-gradient(45deg, #1b263b, #e67e22);
+}
+
+/* SPONSOR */
+.sponsor-banner {
+    margin-top: auto;
+    background: #000;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-radius: 6px;
+    border: 2px solid #e67e22;
+}
+
+.fristo-logo {
+    background: #ff6b00;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+
+.getraenke-text {
+    color: white;
+    font-size: 20px;
+    font-style: italic;
+}
+
+/* ==========================================
+   MEDIA QUERIES (RESPONSIVE)
+   ========================================== */
+
+/* Tablettes (Écrans inférieurs à 1024px) */
+@media (max-width: 1024px) {
+    .content-grid {
+        grid-template-columns: 1fr 1fr; /* On passe sur 2 colonnes */
+    }
+    
+    .center-stage {
+        grid-column: span 2; /* Le centre prend toute la largeur en haut ou en bas */
+        order: -1; /* Place les phases finales au-dessus des groupes sur tablette */
+    }
+
+    .slots-grid-8 {
+        grid-template-columns: repeat(2, 1fr); /* Moins de colonnes pour les slots */
+    }
+    
+    .slots-grid-16 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Smartphones (Écrans inférieurs à 768px) */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr; /* Tout s'empile sur une seule colonne */
+    }
+
+    .center-stage {
+        grid-column: span 1;
+    }
+
+    .main-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .slots-grid-8, .slots-grid-16 {
+        grid-template-columns: 1fr; /* Une seule ligne par match en mode KO */
+    }
+
+    .slots {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+.stadien-card{
+     width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    
+    /* 1. Ligne de base de la bordure (couleur Or FIFA) */
+    border: 2px solid var(--accent-gold);
+    
+    /* 2. Effet néon : ombres superposées pour créer l'éclat diffus */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),                /* Ombre portée classique */
+                0 0 10px rgba(226, 177, 60, 0.5),             /* Halo néon proche */
+                0 0 25px rgba(226, 177, 60, 0.3);             /* Lueur néon lointaine */
+                
+    /* Sécurité visuelle pour les animations */
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
