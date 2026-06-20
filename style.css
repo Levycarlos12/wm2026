@@ -1,21 +1,20 @@
 /* ==========================================================================
    1. DESIGN SYSTEM & VARIABLES
+   (Avant : ce bloc :root existait en double dans le fichier -> fusionné ici)
    ========================================================================== */
 :root {
-    /* Éléments de couleur inspirés du haut de gamme sportif (FIFA-style) */
     --primary-blue: #020617;     /* Bleu nuit ultra-profond */
     --secondary-blue: #0b1528;   /* Bleu de nuance pour les cartes */
     --accent-gold: #e2b13c;      /* Or pour la compétition et l'interactivité */
     --text-white: #ffffff;
     --text-gray: #94a3b8;
     --bg-light-slate: #0f172a;   /* Fond de page principal */
-    
-    /* Typographies standards et lisibles */
+
     --font-display: 'Arial Black', -apple-system, sans-serif;
-    --font-body: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-body: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Reset CSS propre pour la cohérence des viewports */
+/* Reset CSS (fusion des deux resets dupliqués) */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -26,7 +25,7 @@ body {
     font-family: var(--font-body);
     background-color: var(--bg-light-slate);
     color: var(--text-white);
-    line-height: 1.5;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -36,12 +35,23 @@ img {
     display: block;
 }
 
+a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--text-white);
+}
+
 /* ==========================================================================
    2. RESPONSIVE LAYOUT (CSS GRID STRUCTURAL)
    ========================================================================== */
 .grid-container {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
         "header"
         "main"
         "footer";
@@ -49,12 +59,13 @@ img {
     min-height: 100vh;
 }
 
-.main-header  { grid-area: header; }
-.main-content { grid-area: main; }
-.main-footer  { grid-area: footer; }
+.main-header, .site-header { grid-area: header; }
+.main-content              { grid-area: main; }
+.main-footer, .site-footer { grid-area: footer; }
 
 /* ==========================================================================
-   3. HEADER & NAVIGATION (CSS FLEXBOX - MOBILE-FIRST)
+   3A. HEADER & NAVIGATION — PAGE D'ACCUEIL (.main-header / .nav-list)
+   Mobile-first, menu en tiroir + burger CSS
    ========================================================================== */
 .main-header {
     display: flex;
@@ -82,13 +93,12 @@ img {
     color: var(--accent-gold);
 }
 
-/* Navigation tiroir masquée à droite sur Mobile */
 .nav-list {
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 70px;
-    right: -100%; /* Sorti de l'écran par défaut */
+    right: -100%; /* hors écran par défaut */
     width: 260px;
     height: calc(100vh - 70px);
     background-color: var(--primary-blue);
@@ -99,7 +109,6 @@ img {
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* État ouvert appliqué par JavaScript */
 .nav-list.open {
     right: 0;
 }
@@ -114,14 +123,13 @@ img {
     transition: color 0.2s ease;
 }
 
-.nav-list a:hover, 
+.nav-list a:hover,
 .nav-list a.active {
     color: var(--text-white);
     border-left: 3px solid var(--accent-gold);
     padding-left: 10px;
 }
 
-/* Bouton Menu Burger en pur CSS */
 .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -141,10 +149,110 @@ img {
 }
 
 /* ==========================================================================
-   4. SECTIONS & COMPONENTS (CONTENU PRINCIPAL)
+   3B. HEADER & NAVIGATION — AUTRES PAGES (.site-header / .nav-menu)
+   Mobile-first, menu en tiroir horizontal piloté par [hidden] + classe JS
    ========================================================================== */
+.site-header {
+    background-color: var(--primary-blue);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+}
 
-/* --- Hero Section --- */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    height: 70px;
+}
+
+.site-logo {
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.logo-highlight {
+    color: var(--accent-gold);
+}
+
+.nav-menu {
+    display: none; /* masqué par défaut sur mobile, affiché via .open ou retrait de [hidden] */
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: var(--primary-blue);
+    padding: 2rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 1.5rem;
+    list-style: none;
+}
+
+.nav-menu.open,
+.nav-menu:not([hidden]) {
+    display: flex;
+}
+
+.nav-menu a {
+    color: var(--text-gray);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.nav-menu a:hover {
+    color: var(--text-white);
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-gold);
+    transition: width 0.2s ease;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.nav-button {
+    display: block; /* burger visible par défaut sur mobile */
+    background: transparent;
+    border: none;
+    color: var(--text-white);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* ==========================================================================
+   4. HERO SECTION
+   ========================================================================== */
 .hero-section {
     background-image: linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.8)), url('../assets/hero-bg.jpg');
     background-size: cover;
@@ -157,8 +265,8 @@ img {
 
 .hero-overlay {
     max-width: 800px;
-    position: center;
-    color:#e2b13c;
+    /* "position: center;" n'existe pas en CSS -> supprimé. Le centrage vient déjà du flex du parent. */
+    color: var(--accent-gold);
 }
 
 .hero-overlay h1 {
@@ -168,6 +276,7 @@ img {
     line-height: 1.1;
     margin-bottom: 1rem;
     letter-spacing: -1px;
+    color: var(--text-white);
 }
 
 .hero-overlay p {
@@ -176,7 +285,9 @@ img {
     max-width: 600px;
 }
 
-/* --- Section Conteneur Technologie Ballon --- */
+/* ==========================================================================
+   5. SECTION TECHNOLOGIE BALLON (texte sur fond image)
+   ========================================================================== */
 .ball-feature-container {
     background-image: linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.85)), url('../assets/ball-tech-bg.jpg');
     background-size: cover;
@@ -188,6 +299,10 @@ img {
     min-height: 420px;
     padding: 2rem 1.5rem;
     margin: 3rem 0;
+}
+
+.ball-design-container {
+    background-image: linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.85)), url('../assets/ball-surface-bg.jpg');
 }
 
 .ball-text-box {
@@ -221,7 +336,113 @@ img {
     line-height: 1.6;
 }
 
-/* --- Section News (CSS Grid Mobile-First) --- */
+/* --- Variante "néon" image + texte --- */
+.ball-neon-layout {
+    display: flex;
+    flex-direction: column; /* image en premier, texte en dessous sur mobile */
+    gap: 1.5rem;
+    padding: 1rem;
+    background: transparent;
+}
+
+.ball-image-box {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),
+                0 0 10px rgba(226, 177, 60, 0.5),
+                0 0 25px rgba(226, 177, 60, 0.3);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ball-image-box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    /* la lettre "m" isolée ici cassait toute la règle -> supprimée */
+}
+
+.ball-neon-layout .neon-border {
+    background-color: var(--secondary-blue);
+    padding: 1.5rem;
+    border-radius: 6px;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 0 15px rgba(226, 177, 60, 0.4),
+                inset 0 0 15px rgba(226, 177, 60, 0.2);
+}
+
+/* ==========================================================================
+   6. CARROUSEL DE PRESSE (une seule version, au lieu des 3 dupliquées)
+   ========================================================================== */
+.press-carousel {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    background-color: var(--primary-blue);
+    height: 200px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.press-carousel::-webkit-scrollbar {
+    height: 6px;
+}
+.press-carousel::-webkit-scrollbar-thumb {
+    background-color: var(--accent-gold);
+    border-radius: 10px;
+}
+
+.press-slide {
+    flex: 0 0 85%; /* sur mobile on devine la diapo suivante */
+    scroll-snap-align: start;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.press-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   7. BLOCS STADES (une seule version, au lieu des 3 dupliquées)
+   ========================================================================== */
+.stadium-images-container {
+    display: flex;
+    flex-direction: row;
+    background: var(--primary-blue);
+    padding: 0.75rem;
+    border-radius: 1.5em;
+    gap: 0.5rem;
+}
+
+.stadium-item {
+    flex: 1;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 0.5em;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stadium-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.3em;
+    transition: transform 0.3s ease;
+}
+
+.stadium-item img:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   8. SECTION NEWS
+   ========================================================================== */
 .news-section {
     padding: 2rem 1.5rem;
     max-width: 1400px;
@@ -249,7 +470,7 @@ img {
 
 .news-grid {
     display: grid;
-    grid-template-columns: 1fr; /* 1 colonne par défaut sur mobile */
+    grid-template-columns: 1fr; /* 1 colonne sur mobile */
     gap: 2rem;
 }
 
@@ -263,7 +484,7 @@ img {
 
 .news-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .news-card img {
@@ -296,351 +517,8 @@ img {
     line-height: 1.5;
 }
 
-/* ==========================================================================
-   5. FOOTER
-   ========================================================================== */
-.main-footer {
-    background-color: var(--primary-blue);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.85rem;
-    color: var(--text-gray);
-}
-
-/* ==========================================================================
-   6. RESPONSIVE TABLET & DESKTOP (VIEWPORTS JUSQU'À 1920px)
-   ========================================================================== */
-@media (min-width: 768px) {
-    
-    /* Changement structurel Navigation : Disparition du burger */
-    .menu-toggle {
-        display: none;
-    }
-
-    /* Le menu repasse à l'horizontale intégrée au header */
-    .nav-list {
-        position: static;
-        flex-direction: row;
-        width: auto;
-        height: auto;
-        padding: 0;
-        border: none;
-        gap: 2.5rem;
-    }
-
-    .nav-list a {
-        font-size: 0.9rem;
-        padding: 1.6rem 0;
-        position: relative;
-    }
-
-    /* Effet FIFA : Ligne dorée animée sous le lien actif au survol */
-    .nav-list a:hover, 
-    .nav-list a.active {
-        color: var(--text-white);
-        border-left: none;
-        padding-left: 0;
-    }
-
-    .nav-list a::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 3px;
-        background-color: var(--accent-gold);
-        transition: width 0.2s ease;
-    }
-
-    .nav-list a:hover::after,
-    .nav-list a.active::after {
-        width: 100%;
-    }
-
-    /* Mise en page de la section Hero */
-    .hero-overlay h1 {
-        font-size: 4rem;
-    }
-
-    /* Ajustement de la section Technologie Ballon */
-    .ball-feature-container {
-        min-height: 520px;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 4rem;
-    }
-
-    .ball-text-box {
-        padding: 2.5rem;
-    }
-
-    .ball-text-box h2 {
-        font-size: 2.2rem;
-    }
-    .ball-design-container {
-    /* Chemin vers la deuxième photo (ex: les détails de la surface du ballon) */
-    background-image: linear-gradient(rgba(2, 6, 23, 0.4), rgba(2, 6, 23, 0.85)), url('../assets/ball-surface-bg.jpg');
-}
-
-    /* Grille de News multi-colonnes en CSS
-    /* ==========================================================================
-   ZOOM STADES : AJUSTEMENT DE VOS PROPRIÉTÉS FLEXBOX
-   ========================================================================== */
-
-/* Votre ".container" adapté au thème Coupe du Monde */
-.stadium-images-container {
-    display: flex;
-    flex-direction: row;        /* Aligne les 3 blocs en ligne comme vous l'avez demandé */
-    background: var(--primary-blue); /* Remplace le gris par votre bleu FIFA pour rester pro */
-    padding: 1em;               /* Garde votre espace de 1em */
-    border-radius: 1.5em;       /* Légèrement réduit pour un rendu plus net sur les angles */
-    gap: 0.5em;                 /* Crée un espace régulier entre vos blocs */
-}
-
-/* Votre ".item" adapté aux images de stades */
-.stadium-item {
-    flex: 1;                    /* Force les 3 blocs à occuper exactement la même largeur */
-    background: var(--accent-gold); /* Remplace l'orange par votre couleur Or de la compétition */
-    padding: 0.5em;             /* Espace interne pour créer un cadre autour de l'image */
-    border: 0.15em solid var(--accent-gold); /* Bordure en harmonie avec le thème */
-    border-radius: 0.5em;       /* Garde vos arrondis de 0.5em */
-    height: 140px;              /* Fixe une hauteur identique pour vos 3 boîtes */
-    overflow: hidden;           /* Coupe les bords des photos pour qu'elles respectent vos arrondis */
-}
-
-/* Gestion de l'image à l'intérieur de vos ".item" */
-.stadium-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;          /* Rplit le bloc proprement sans déformer la photo du stade */
-    border-radius: 0.3em;       /* Arrondit aussi la photo pour un rendu parfait */
-    transition: transform 0.3s ease;
-}
-
-/* Effet bonus au survol */
-.stadium-item img:hover {
-    transform: scale(1.05);     /* Zoom léger de l'image dans son cadre au survol */
-}
-
-/* --- ADAPTATION DESKTOP --- */
-@media (min-width: 768px) {
-    .stadium-item {
-        height: 180px;          /* On agrandit vos boîtes d'images sur grand écran */
-    }
-}
-.press-carousel {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;          /* Active le défilement horizontal obligatoire */
-    overflow-y: hidden;         /* Interdit le défilement vertical */
-    scroll-snap-type: x mandatory; /* Force l'image à se caler parfaitement à l'écran */
-    background-color: var(--primary-blue);
-    height: 200px;              /* Hauteur identique aux autres cartes de news */
-}
-
-/* Personnalisation de la barre de défilement pour un effet discret */
-.press-carousel::-webkit-scrollbar {
-    height: 6px;
-}
-.press-carousel::-webkit-scrollbar-thumb {
-    background-color: var(--accent-gold);
-    border-radius: 10px;
-}
-
-/* Chaque bloc d'image individuel à l'intérieur du défilement */
-.press-slide {
-    flex: 0 0 85%;              /* Chaque image occupe 85% de la largeur pour laisser deviner la suivante */
-    scroll-snap-align: start;   /* Aligne le début de chaque image lors du défilement */
-    position: relative;
-    overflow: hidden;
-    height: auto;
-}
-
-/* Redimensionnement parfait des photos */
-.press-slide img {
-    width: auto;
-    height: auto;
-    object-fit: cover;          /* Remplit la boîte sans déformer les visages */
-}
-
-/* --- ADAPTATION DESKTOP (Écrans plus grands) --- */
-@media (min-width: 768px) {
-    .press-carousel {
-        height: 220px;          /* Légère augmentation de hauteur sur PC */
-    }
-    
-    .press-slide {
-        flex: 0 0 100%;         /* Sur PC, l'image occupe toute la largeur de la carte */
-    }
-}
-
-/* Conteneur principal : Empilement vertical par défaut (Mobile) */
-.ball-neon-layout {
-    display: flex;
-    flex-direction: column; /* L'image s'affiche en premier, le texte en dessous */
-    gap: 1.5rem;
-    padding: 1rem;
-    background: transparent;
-}
-
-/* Boîte de l'image (Agrandie) */
-.ball-image-box {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    
-    /* 1. Ligne de base de la bordure (couleur Or FIFA) */
-    border: 2px solid var(--accent-gold);
-    
-    /* 2. Effet néon : ombres superposées pour créer l'éclat diffus */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),                /* Ombre portée classique */
-                0 0 10px rgba(226, 177, 60, 0.5),             /* Halo néon proche */
-                0 0 25px rgba(226, 177, 60, 0.3);             /* Lueur néon lointaine */
-                
-    /* Sécurité visuelle pour les animations */
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.ball-image-box img {
-    width: 100%;
-    height: 250px; /* Hauteur fixe et propre sur smartphone */
-    object-fit: cover; /* Zoom et adaptation parfaite sans distorsion */
-    m
-}
-
-/* Bloc de texte avec effet Bordure Néon Dorée */
-.ball-neon-layout .neon-border {
-    background-color: var(--secondary-blue);
-    padding: 1.5rem;
-    border-radius: 6px;
-    border: 2px solid var(--accent-gold);
-    /* Éclat lumineux néon (externe et interne) */
-    box-shadow: 0 0 15px rgba(226, 177, 60, 0.4), 
-                inset 0 0 15px rgba(226, 177, 60, 0.2);
-}
-
-
-
-/* ==========================================================================
-   2. CARTE MÉDIA : CARROUSEL DE PRESSE HORIZONTAL
-   ========================================================================== */
-
-/* Conteneur de défilement horizontal */
-.press-carousel {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto; /* Active le scroll horizontal tactile */
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory; /* Calage automatique de l'image au scroll */
-    height: 180px;
-    background-color: #000;
-}
-
-/* Personnalisation fine de la scrollbar */
-.press-carousel::-webkit-scrollbar {
-    height: 5px;
-}
-.press-carousel::-webkit-scrollbar-thumb {
-    background-color: var(--accent-gold);
-    border-radius: 10px;
-}
-
-/* Chaque diapositive de photo */
-.press-slide {
-    flex: 0 0 85%; /* On voit 85% de l'image + un bout de la suivante pour inciter à scroller */
-    scroll-snap-align: start;
-}
-
-.press-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* ==========================================================================
-   3. CARTE STADES : ALIGNEMENT COMPACT DES TROIS BLOCS
-   ========================================================================== */
-
-/* Conteneur en ligne (Votre structure .container ajustée) */
-.stadium-images-container {
-    display: flex;
-    flex-direction: row;
-    background: var(--secondary-blue);
-    padding: 0.75rem;
-    gap: 0.5rem;
-}
-
-/* Chaque boîte de stade (Votre structure .item ajustée) */
-.stadium-item {
-    flex: 1; /* Largeur strictement identique pour les 3 blocs (1/3 chacun) */
-    height: 120px;
-    overflow: hidden;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stadium-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-/* Animation premium au survol */
-.stadium-item img:hover {
-    transform: scale(1.08);
-}
-
-
-/* ==========================================================================
-   4. ADAPTATION GRAND ÉCRAN (ORDINATEUR / TABLETTE)
-   ========================================================================== */
-
-@media (min-width: 768px) {
-    
-    /* Layout Ballon : Côte à côte et inversion (Texte à gauche, Image à droite) */
-    .ball-neon-layout {
-        flex-direction: row-reverse;
-        align-items: stretch; /* Force l'image et le texte à avoir EXACTEMENT la même hauteur */
-        gap: 2.5rem;
-        padding: 2rem 0;
-    }
-
-    .ball-image-box, 
-    .ball-neon-layout .neon-border {
-        flex: 1;
-        width: 50%; /* Équilibre parfait 50/50 */
-    }
-
-    .ball-image-box img {
-        height: 100%; /* S'étire sur toute la hauteur du bloc de texte */
-        min-height: 380px;
-        height: auto; /* Maintient les proportions de l'image sans déformation */
-    }
-
-    .ball-neon-layout .neon-border {
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* Centre verticalement le texte à côté de l'image */
-        padding: 2.5rem;
-    }
-
-    /* Ajustements des cartes de la grille d'actualités */
-    .press-carousel {
-        height: 200px;
-    }
-    
-    .press-slide {
-        flex: 0 0 100%; /* Sur PC, l'image prend toute la largeur de sa carte */
-    }
-
-    .stadium-item {
-        height: 140px;
-    }
-}
-read-more-link {
+.read-more-link {
+    /* la classe était écrite sans le point (read-more-link {) donc jamais appliquée -> corrigé */
     display: inline-block;
     margin-top: 1rem;
     color: var(--accent-gold);
@@ -653,6 +531,7 @@ read-more-link {
 .read-more-link:hover {
     color: var(--text-white);
 }
+
 .video-container {
     display: flex;
     justify-content: center;
@@ -662,153 +541,7 @@ read-more-link {
 }
 
 /* ==========================================================================
-   1. DESIGN SYSTEM & VARIABLES
-   ========================================================================== */
-:root {
-    --primary-blue: #020617;     /* Bleu nuit ultra-profond */
-    --secondary-blue: #0b1528;   /* Bleu de nuance pour les cartes */
-    --accent-gold: #e2b13c;      /* Or pour la compétition et les titres */
-    --text-white: #ffffff;
-    --text-gray: #94a3b8;
-    --bg-light-slate: #0f172a;   /* Fond de page principal */
-    
-    --font-body: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* Reset de base */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: var(--font-body);
-    background-color: var(--bg-light-slate);
-    color: var(--text-white);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-}
-
-a {
-    color: var(--accent-gold);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-a:hover {
-    color: var(--text-white);
-}
-
-/* ==========================================================================
-   2. STRUCTURAL LAYOUT (GRID)
-   ========================================================================== */
-.grid-container {
-    display: grid;
-    grid-template-areas: 
-        "header"
-        "main"
-        "footer";
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
-}
-
-.site-header { grid-area: header; }
-.main-content { grid-area: main; }
-.site-footer  { grid-area: footer; }
-
-/* ==========================================================================
-   3. HEADER & NAVIGATION
-   ========================================================================== */
-.site-header {
-    background-color: var(--primary-blue);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-}
-
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    height: 70px;
-}
-
-.site-logo {
-    font-weight: 800;
-    font-size: 1.3rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.logo-highlight {
-    color: var(--accent-gold);
-}
-
-/* Menu de navigation standard */
-.nav-menu {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
-
-.nav-menu a {
-    color: var(--text-gray);
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
-    font-weight: 600;
-    padding: 0.5rem 0;
-    position: relative;
-}
-
-.nav-menu a:hover {
-    color: var(--text-white);
-}
-
-.nav-menu a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: var(--accent-gold);
-    transition: width 0.2s ease;
-}
-
-.nav-menu a:hover::after {
-    width: 100%;
-}
-
-/* Bouton Burger (Masqué sur PC par défaut) */
-.nav-button {
-    display: none;
-    background: transparent;
-    border: none;
-    color: var(--text-white);
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-/* ==========================================================================
-   4. MAIN CONTENT & SECTIONS
+   9. PAGE INFOS / HISTORIQUE
    ========================================================================== */
 .main-content {
     max-width: 1200px;
@@ -817,14 +550,13 @@ a:hover {
     width: 100%;
 }
 
-/* En-tête de la page */
 .page-header {
     text-align: center;
     margin-bottom: 4rem;
 }
 
 .page-header h1 {
-    font-size: 2.8rem;
+    font-size: 2.2rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -1px;
@@ -838,9 +570,8 @@ a:hover {
     margin: 0 auto;
 }
 
-/* Titres globaux des sections */
 h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
@@ -858,20 +589,20 @@ h2::after {
     background-color: var(--accent-gold);
 }
 
-/* --- Grille des Records (Cards) --- */
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 5rem;
+    grid-template-columns: 1fr; /* 1 colonne sur mobile */
+    gap: 1.5rem;
+    margin-bottom: 4rem;
 }
 
 .info-card {
     background-color: var(--secondary-blue);
     border-radius: 8px;
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.03);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -884,14 +615,15 @@ h2::after {
 .card-icon {
     font-size: 2rem;
     min-width: 50px;
+    width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    align-self: flex-start;
 }
 
-/* Variantes de couleurs pour les icônes */
 .icon-neon-bg {
     background-color: rgba(226, 177, 60, 0.1);
     border: 1px solid var(--accent-gold);
@@ -913,22 +645,22 @@ h2::after {
     padding-bottom: 0;
 }
 
-.card-text h2::after { display: none; } /* Enlève la ligne sous les h2 des cartes */
+.card-text h2::after {
+    display: none;
+}
 
 .card-text p {
     color: var(--text-gray);
     font-size: 0.95rem;
 }
 
-/* --- Section Zeitstrahl (Timeline) --- */
 .history-timeline {
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
 }
 
 .history-timeline .info-card {
     margin-bottom: 1.5rem;
     border-left: 4px solid var(--accent-gold);
-    display: block; /* Aligne le contenu à la verticale pour la timeline */
 }
 
 .history-timeline .info-card h2 {
@@ -937,13 +669,14 @@ h2::after {
     font-weight: 800;
 }
 
-/* --- Table : Erfolgreichste Nationen --- */
 .top-nations {
     margin-bottom: 2rem;
+    overflow-x: auto; /* évite que le tableau casse la mise en page sur mobile */
 }
 
 .top-nations table {
     width: 100%;
+    min-width: 480px; /* garde les colonnes lisibles, scroll horizontal si besoin */
     border-collapse: collapse;
     background-color: var(--secondary-blue);
     border-radius: 8px;
@@ -952,9 +685,9 @@ h2::after {
     border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.top-nations th, 
+.top-nations th,
 .top-nations td {
-    padding: 1rem 1.5rem;
+    padding: 0.85rem 1rem;
     text-align: left;
 }
 
@@ -986,65 +719,8 @@ h2::after {
 }
 
 /* ==========================================================================
-   5. SITE FOOTER
+   10. TABLEAU DES MATCHS (LISTE DE RÉSERVATION)
    ========================================================================== */
-.site-footer {
-    background-color: var(--primary-blue);
-    padding: 2rem 1.5rem;
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.9rem;
-    color: var(--text-gray);
-}
-
-/* ==========================================================================
-   6. RESPONSIVE DESIGN (MEDIA QUERIES)
-   ========================================================================== */
-@media (max-width: 768px) {
-    .page-header h1 {
-        font-size: 2.2rem;
-    }
-
-    /* Activation du bouton burger pour mobile */
-    .nav-button {
-        display: block;
-    }
-
-    /* Transformation du menu en tiroir vertical masqué */
-    .nav-menu {
-        display: none; /* Cache par défaut si JavaScript bascule la visibilité */
-        flex-direction: column;
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background-color: var(--primary-blue);
-        padding: 2rem;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        gap: 1.5rem;
-    }
-
-    /* Classe déclenchée si le menu n'est pas masqué par l'attribut hidden */
-    .nav-menu:not([hidden]) {
-        display: flex;
-    }
-
-    .info-card {
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .card-icon {
-        align-self: flex-start;
-    }
-}
-
-/* ==========================================================================
-   CSS POUR LES LIGNES DE MATCH (TABLEAU DE RÉSERVATION)
-   ========================================================================== */
-
-/* Conteneur parent de vos lignes (Optionnel : à ajouter autour de vos articles si nécessaire) */
 .match-table-container {
     display: flex;
     flex-direction: column;
@@ -1054,42 +730,38 @@ h2::after {
     padding: 0 1rem;
 }
 
-/* Structure globale d'une ligne de match */
 .table-row {
     display: grid;
-    grid-template-columns: 1.5fr 2fr 2fr 1fr; /* Alignement parfait des 4 colonnes sur PC */
+    grid-template-columns: 1fr; /* 1 colonne sur mobile */
     align-items: center;
-    background-color: var(--secondary-blue, #0b1528);
+    background-color: var(--secondary-blue);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    padding: 1rem 1.5rem;
-    gap: 1.5rem;
+    padding: 1.25rem;
+    gap: 0.8rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-/* Effet au survol de la ligne */
 .table-row:hover {
     transform: translateY(-2px);
-    border-color: var(--accent-gold, #e2b13c);
+    border-color: var(--accent-gold);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Éléments de texte génériques dans les colonnes */
 .col-teams, .col-venue, .col-time, .col-action {
     display: flex;
     align-items: center;
-    color: var(--text-white, #ffffff);
+    color: var(--text-white);
     font-size: 0.95rem;
 }
 
-/* --- 1. Colonne Équipes (Badges + VS) --- */
 .col-teams {
     gap: 0.75rem;
     font-weight: 700;
 }
 
 .team-badge {
-    background-color: var(--primary-blue, #020617);
+    background-color: var(--primary-blue);
     padding: 0.4rem 0.8rem;
     border-radius: 4px;
     letter-spacing: 0.5px;
@@ -1097,37 +769,36 @@ h2::after {
 }
 
 .match-vs {
-    color: var(--accent-gold, #e2b13c);
+    color: var(--accent-gold);
     font-size: 0.8rem;
     font-weight: 800;
 }
 
-/* --- 2. Colonne Lieux et Horaires (Icônes + Texte) --- */
-.col-venue .icon, 
+.col-venue .icon,
 .col-time .icon {
     margin-right: 0.5rem;
     font-size: 1.1rem;
 }
 
 .text-truncate {
-    white-space: nowrap;
+    white-space: normal; /* lisible sur mobile, sera tronqué sur desktop */
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .col-time {
-    color: var(--text-gray, #94a3b8);
+    color: var(--text-gray);
 }
 
-/* --- 3. Colonne Action (Bouton Réservation) --- */
 .col-action {
-    justify-content: flex-end;
+    justify-content: center;
+    margin-top: 0.5rem;
 }
 
 .btn-select-match {
     background-color: transparent;
-    color: var(--accent-gold, #e2b13c);
-    border: 2px solid var(--accent-gold, #e2b13c);
+    color: var(--accent-gold);
+    border: 2px solid var(--accent-gold);
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
     font-weight: 700;
@@ -1142,8 +813,8 @@ h2::after {
 }
 
 .btn-select-match:hover {
-    background-color: var(--accent-gold, #e2b13c);
-    color: var(--primary-blue, #020617);
+    background-color: var(--accent-gold);
+    color: var(--primary-blue);
 }
 
 .btn-select-match:active {
@@ -1151,33 +822,8 @@ h2::after {
 }
 
 /* ==========================================================================
-   ADAPTATION MOBILE (RESPONSIVE)
+   11. PAGE RÉSERVATION (FORMULAIRE & TICKET)
    ========================================================================== */
-@media (max-width: 900px) {
-    .table-row {
-        grid-template-columns: 1fr; /* Passage sur une seule colonne verticale */
-        gap: 0.8rem;
-        padding: 1.25rem;
-    }
-    
-    .col-action {
-        justify-content: center;
-        margin-top: 0.5rem;
-    }
-    
-    .btn-select-match {
-        width: 100%; /* Le bouton prend toute la largeur sur smartphone */
-    }
-    
-    .text-truncate {
-        white-space: normal; /* Permet le retour à la ligne du stade si besoin sur mobile */
-    }
-}
-/* ==========================================================================
-   CSS POUR LA PAGE DE RÉSERVATION (FORMULAIRE & TICKETS)
-   ========================================================================== */
-
-/* Structure de la section centrale */
 .booking-section {
     padding: 2rem 1rem;
     max-width: 800px;
@@ -1185,14 +831,13 @@ h2::after {
 }
 
 .booking-container {
-    background-color: var(--secondary-blue, #0b1528);
+    background-color: var(--secondary-blue);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
-    padding: 2.5rem;
+    padding: 1.5rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* --- 1. Gestion des messages d'erreur --- */
 #error-message:not(:empty) {
     background-color: rgba(239, 68, 68, 0.1);
     border: 1px solid #ef4444;
@@ -1204,17 +849,16 @@ h2::after {
     font-weight: 600;
 }
 
-/* --- 2. Résumé du match sélectionné --- */
 .reservation-summary {
-    background-color: var(--primary-blue, #020617);
-    border-left: 4px solid var(--accent-gold, #e2b13c);
+    background-color: var(--primary-blue);
+    border-left: 4px solid var(--accent-gold);
     border-radius: 4px;
     padding: 1.5rem;
     margin-bottom: 2.5rem;
 }
 
 .reservation-summary p {
-    color: var(--text-gray, #94a3b8);
+    color: var(--text-gray);
     font-size: 1rem;
     margin-bottom: 0.75rem;
 }
@@ -1224,17 +868,16 @@ h2::after {
 }
 
 .reservation-summary strong {
-    color: var(--text-white, #ffffff);
-    display: inline-block;
-    width: 90px;
+    color: var(--text-white);
+    display: block;
+    margin-bottom: 0.2rem;
 }
 
 .reservation-summary span {
-    color: var(--accent-gold, #e2b13c);
+    color: var(--accent-gold);
     font-weight: 600;
 }
 
-/* --- 3. Formulaire de saisie --- */
 #reservation-form {
     display: flex;
     flex-direction: column;
@@ -1248,7 +891,7 @@ h2::after {
 }
 
 .form-group label {
-    color: var(--text-white, #ffffff);
+    color: var(--text-white);
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -1256,9 +899,9 @@ h2::after {
 }
 
 .form-group input {
-    background-color: var(--primary-blue, #020617);
+    background-color: var(--primary-blue);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-white, #ffffff);
+    color: var(--text-white);
     padding: 0.85rem 1rem;
     border-radius: 6px;
     font-family: inherit;
@@ -1266,17 +909,15 @@ h2::after {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Focus sur les champs de saisie */
 .form-group input:focus {
     outline: none;
-    border-color: var(--accent-gold, #e2b13c);
+    border-color: var(--accent-gold);
     box-shadow: 0 0 8px rgba(226, 177, 60, 0.2);
 }
 
-/* Style du bouton de soumission */
 .btn-submit {
-    background-color: var(--accent-gold, #e2b13c);
-    color: var(--primary-blue, #020617);
+    background-color: var(--accent-gold);
+    color: var(--primary-blue);
     border: none;
     padding: 1rem;
     font-size: 1rem;
@@ -1290,14 +931,13 @@ h2::after {
 }
 
 .btn-submit:hover {
-    background-color: #f3c45a; /* Or légèrement plus clair au survol */
+    background-color: #f3c45a;
 }
 
 .btn-submit:active {
     transform: scale(0.98);
 }
 
-/* --- 4. Conteneur du Ticket Généré (Futur contenu JS) --- */
 #ticket-card-wrapper {
     margin-top: 3rem;
     display: flex;
@@ -1305,15 +945,199 @@ h2::after {
 }
 
 /* ==========================================================================
-   ADAPTATION MOBILE (RESPONSIVE)
+   12. FOOTER
    ========================================================================== */
-@media (max-width: 600px) {
+.main-footer, .site-footer {
+    background-color: var(--primary-blue);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.9rem;
+    color: var(--text-gray);
+}
+
+/* ==========================================================================
+   13. RESPONSIVE TABLET & DESKTOP — UN SEUL BLOC, SANS IMBRICATION
+   (Avant : plusieurs @media (min-width: 768px) dupliqués et même un
+   @media imbriqué dans un autre -> tout est regroupé ici une seule fois)
+   ========================================================================== */
+@media (min-width: 768px) {
+
+    /* --- Nav page d'accueil --- */
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-list {
+        position: static;
+        flex-direction: row;
+        width: auto;
+        height: auto;
+        padding: 0;
+        border: none;
+        gap: 2.5rem;
+    }
+
+    .nav-list a {
+        font-size: 0.9rem;
+        padding: 1.6rem 0;
+        position: relative;
+    }
+
+    .nav-list a:hover,
+    .nav-list a.active {
+        color: var(--text-white);
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .nav-list a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 3px;
+        background-color: var(--accent-gold);
+        transition: width 0.2s ease;
+    }
+
+    .nav-list a:hover::after,
+    .nav-list a.active::after {
+        width: 100%;
+    }
+
+    /* --- Nav autres pages --- */
+    .nav-button {
+        display: none;
+    }
+
+    .nav-menu {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        width: auto;
+        background: none;
+        box-shadow: none;
+        border-bottom: none;
+        padding: 0;
+        gap: 2rem;
+    }
+
+    /* --- Hero --- */
+    .hero-overlay h1 {
+        font-size: 4rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.8rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    /* --- Ballon (texte sur image) --- */
+    .ball-feature-container {
+        min-height: 520px;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 4rem;
+    }
+
+    .ball-text-box {
+        padding: 2.5rem;
+    }
+
+    .ball-text-box h2 {
+        font-size: 2.2rem;
+    }
+
+    /* --- Ballon néon (image + texte côte à côte) --- */
+    .ball-neon-layout {
+        flex-direction: row-reverse;
+        align-items: stretch;
+        gap: 2.5rem;
+        padding: 2rem 0;
+    }
+
+    .ball-image-box,
+    .ball-neon-layout .neon-border {
+        flex: 1;
+        width: 50%;
+    }
+
+    .ball-image-box img {
+        height: 100%;
+        min-height: 380px;
+    }
+
+    .ball-neon-layout .neon-border {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2.5rem;
+    }
+
+    /* --- Carrousel de presse --- */
+    .press-carousel {
+        height: 220px;
+    }
+
+    .press-slide {
+        flex: 0 0 100%;
+    }
+
+    /* --- Stades --- */
+    .stadium-item {
+        height: 180px;
+    }
+
+    /* --- News --- */
+    .news-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    /* --- Cartes infos --- */
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+    }
+
+    .info-card {
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    /* --- Tableau de matchs --- */
+    .table-row {
+        grid-template-columns: 1.5fr 2fr 2fr 1fr;
+        gap: 1.5rem;
+        padding: 1rem 1.5rem;
+    }
+
+    .col-action {
+        justify-content: flex-end;
+        margin-top: 0;
+    }
+
+    .btn-select-match {
+        width: auto;
+    }
+
+    .text-truncate {
+        white-space: nowrap;
+    }
+
+    /* --- Réservation --- */
     .booking-container {
-        padding: 1.5rem;
+        padding: 2.5rem;
     }
 
     .reservation-summary strong {
-        display: block;
-        margin-bottom: 0.2rem;
+        display: inline-block;
+        width: 90px;
+        margin-bottom: 0;
     }
 }
