@@ -3,35 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIFA WORLD CUP  2026</title>
-    <link rel="stylesheet" href="finalphase.css">
-     <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <title>FIFA World Cup 2026</title>
 
+    <link rel="stylesheet" href="finalphase.css">
+    <link rel="icon" type="image/avif" href="./img/tironda.avif">
+</head>
+
+<body>
     <div class="main-container">
-        <header class="site-header">
-            <nav class="nav-container" aria-label="Navigation principale">
-                  <div class="logo">
-                <a href="index.html"> FIFA WORLD CUP <span class="year">2026</span></a>
+
+        <header class="main-header">
+            <div class="logo">
+                <a href="index.html">FIFA WORLD CUP <span>2026</span></a>
             </div>
 
-                <button id="menu-toggle" class="nav-button" aria-expanded="false" aria-controls="menu">
-                    <span class="icon">☰</span>
-                    <span class="sr-only">Navigationsmenü öffnen</span>
-                </button>
+            <button class="menu-toggle" id="menu-toggle" aria-label="Ouvrir le menu">
+                ☰
+            </button>
 
-                <ul id="menu" class="nav-menu" hidden>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="info.html">Geschichte</a></li>
-                    <li><a href="Quiz.html">Quiz</a></li>
-                  
+            <nav class="main-nav">
+                <ul class="nav-list" id="js-nav-list">
+                    <li><a href="index.html" class="active">HOME</a></li>
+                    <li><a href="Spielplan.html">MATCHES</a></li>
+                      <li><a href="info.html">GESCHICHTE</a></li>
+                    <li><a href="games.html">QUIZ</a></li>
+                   
                 </ul>
             </nav>
         </header>
 
+        <section class="page-title">
+            <h1>FIFA WORLD CUP 2026</h1>
+            <p>11.06.2026 - 19.07.2026</p>
+            <p>USA • KANADA • MEXIKO</p>
+        </section>
+
         <div class="content-grid">
-            
+
             <aside class="column-groups">
                 <div class="group-card" data-group="A"></div>
                 <div class="group-card" data-group="B"></div>
@@ -41,49 +49,48 @@
                 <div class="group-card" data-group="F"></div>
             </aside>
 
-
-            
             <main class="center-stage">
-             <!--   <section class="tournament-info">
-                    <div class="-stadien-card">
-
-                        <img src="stadien.png" alt="Stadien" class="stadien-image">
-                    </div>
-                       
+                <section class="map-section">
+                   
                 </section>
-                -->
-                
-                <div class="map-section">
-                    <div class="stadien-card">
-                    <img src="stadien.png" alt="Stadien" class="stadien-image">
-                    </div>
-                </div>
 
-                <div class="knockout-stage">
+                <section class="knockout-stage">
                     <div class="ko-row finale">
-                        <h3>FINALE</h3>
+                        <h2>FINALE</h2>
                         <div class="match-slot big"></div>
                     </div>
+
                     <div class="ko-row halbfinale">
-                        <h3>HALBFINALE</h3>
-                        <div class="slots"><div class="match-slot"></div><div class="match-slot"></div></div>
+                        <h2>HALBFINALE</h2>
+                        <div class="slots">
+                            <div class="match-slot"></div>
+                            <div class="match-slot"></div>
+                        </div>
                     </div>
+
                     <div class="ko-row viertelfinale">
-                        <h3>VIERTELFINALE</h3>
-                        <div class="slots"><div class="match-slot"></div><div class="match-slot"></div><div class="match-slot"></div><div class="match-slot"></div></div>
+                        <h2>VIERTELFINALE</h2>
+                        <div class="slots">
+                            <div class="match-slot"></div>
+                            <div class="match-slot"></div>
+                            <div class="match-slot"></div>
+                            <div class="match-slot"></div>
+                        </div>
                     </div>
+
                     <div class="ko-row achtelfinale">
-                        <h3>ACHTELFINALE</h3>
+                        <h2>ACHTELFINALE</h2>
                         <div class="slots-grid-8"></div>
                     </div>
+
                     <div class="ko-row sechzehntelfinale">
-                        <h3>SECHZEHNTELFINALE</h3>
+                        <h2>SECHZEHNTELFINALE</h2>
                         <div class="slots-grid-16"></div>
                     </div>
-                </div>
+                </section>
 
                 <footer class="sponsor-banner">
-                    <div class="fristo-logo">FBI</div>
+                    <div class="hs-logo">FBI</div>
                     <div class="getraenke-text">HS Worms</div>
                 </footer>
             </main>
