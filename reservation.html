@@ -6,6 +6,7 @@
     <title>FIFA 2026 - Reservation</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+     <link rel="icon" type="image/avif" href="./img/tironda.avif">
 </head>
 <body>
     <div class="grid-container">
@@ -21,10 +22,10 @@
                 </button>
 
                 <ul id="menu" class="nav-menu" hidden>
-                    <li><a href="index.html">Home</a></li>
-                     <li><a href="Spielplan.html">Spielplan</a></li>
-                    <li><a href="info.html">Geschichte</a></li>
-                    <li><a href="Quiz.html">Quiz</a></li>
+                   <li><a href="index.html">HOME</a></li>
+                    <li><a href="finalphase.html">TOURNAMENT INFO</a></li>
+                     <li><a href="info.html">GESCHICHTE</a></li>
+                    <li><a href="games.html">QUIZ</a></li>
                   
                 </ul>
             </nav>
@@ -291,7 +292,7 @@
                         if (!statusEl) return;
                         if (sent) {
                             statusEl.style.color = '#00ff88';
-                            statusEl.textContent = `✓ E-Mail envoyée à ${clientEmail}.`;
+                            statusEl.textContent = `✓ E-mail gesendet an  ${clientEmail}.`;
                         } else {
                             statusEl.style.color = '#ff6666';
                          
@@ -301,7 +302,7 @@
                         const statusEl = ticketWrapper.querySelector('#send-status');
                         if (statusEl) {
                             statusEl.style.color = '#ff6666';
-                            statusEl.textContent = 'L’envoi de l’e-mail a échoué (erreur réseau). Le ticket a été généré sur la page.';
+                            statusEl.textContent = 'felgeschlagen(erreur réseau). ticket auf der Webseite verfugbar.';
                         }
                     });
             });

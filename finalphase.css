@@ -9,55 +9,113 @@
 
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 10px;
     background-color: var(--bg-dark);
     color: var(--text-light);
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 12px;
-    background-image: url('img/football-pattern.png');
+    background-image: url("img/football-pattern.png");
     background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    background-position: center;
     background-attachment: fixed;
 }
 
 .main-container {
     max-width: 1600px;
     margin: 0 auto;
-    border: 2px solid var(--border-color);
     padding: 15px;
-    background: linear-gradient(180deg, #112233 0%, #050b14 100%);
-    border-radius: 8px;
-    border-radius: 8px;
-    background-color: rgba(10, 20, 30, 0.7);
+    min-height: 100vh;
 }
 
 /* HEADER */
+
 .main-header {
-    text-align: center;
-    margin-bottom: 20px;
+    height: 70px;
+    background: #020617;
     border-bottom: 2px solid var(--accent-orange);
-    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.main-header h1 {
-    font-size: 2rem;
-    margin: 0;
-    letter-spacing: 2px;
+.logo a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
-.dates {
-    font-size: 1.2rem;
+.logo span {
     color: var(--accent-orange);
-    margin: 5px 0;
+}
+
+.menu-toggle {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: block;
+}
+
+.nav-list {
+    list-style: none;
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 260px;
+    height: calc(100vh - 70px);
+    background: #020617;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    transition: right 0.3s ease;
+}
+
+.nav-list.open {
+    right: 0;
+}
+
+.nav-list a {
+    color: #cbd5e1;
+    text-decoration: none;
     font-weight: bold;
 }
 
-/* GRILLE PRINCIPALE (Desktop par défaut) */
+.nav-list a:hover,
+.nav-list a.active {
+    color: var(--accent-orange);
+}
+
+/* TITLE */
+
+.page-title {
+    text-align: center;
+    margin: 25px 0;
+}
+
+.page-title h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+}
+
+.page-title p {
+    color: var(--accent-orange);
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* LAYOUT */
+
 .content-grid {
     display: grid;
     grid-template-columns: 320px 1fr 320px;
@@ -70,7 +128,8 @@ body {
     gap: 15px;
 }
 
-/* BLOCS DE GROUPES */
+/* GROUPS */
+
 .group-card {
     background-color: var(--panel-bg);
     border: 1px solid var(--border-color);
@@ -91,14 +150,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 6px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 7px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .match-time {
     font-size: 10px;
     color: #a0aec0;
-    width: 75px;
+    width: 80px;
 }
 
 .team-inputs {
@@ -108,16 +167,15 @@ body {
 }
 
 .team-name {
-    width: 70px;
+    width: 75px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    display: inline-block;
 }
 
 .score-box {
-    width: 22px;
-    height: 20px;
+    width: 24px;
+    height: 22px;
     background: #2c3e50;
     border: 1px solid var(--border-color);
     color: white;
@@ -125,31 +183,42 @@ body {
     font-size: 11px;
 }
 
-/* CENTRE : STADES & PHASES FINALES */
+/* CENTER */
+
 .center-stage {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.map-section {
+
+   .map-section {
     height: 220px;
-    background: #1b263b;
-    border: 1px dashed var(--accent-orange);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
+   padding: 0%;
+    background-image: url("img/carte.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.map-placeholder {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1rem 2rem;
+    border-radius: 6px;
+    color: var(--accent-orange);
+    font-weight: bold;
 }
 
 .ko-row {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0, 0, 0, 0.4);
     padding: 12px;
     border-radius: 6px;
+    margin-bottom: 12px;
 }
 
-.ko-row h3 {
-    margin: 0 0 10px 0;
+.ko-row h2 {
+    margin-bottom: 10px;
     color: var(--accent-orange);
     font-size: 13px;
     text-align: center;
@@ -161,35 +230,37 @@ body {
     gap: 10px;
 }
 
-/* Grilles responsives pour la phase finale */
-.slots-grid-8 {
+.slots-grid-8,
+.slots-grid-16 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
 }
 
-.slots-grid-16 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
-}
-
 .match-slot {
-    height: 35px;
+    min-height: 35px;
     background: #1b263b;
     border: 1px solid var(--border-color);
     border-radius: 3px;
     width: 100%;
+    color: white;
+    font-size: 10px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .match-slot.big {
-    height: 50px;
+    min-height: 50px;
     max-width: 300px;
     margin: 0 auto;
     background: linear-gradient(45deg, #1b263b, #e67e22);
 }
 
-/* SPONSOR */
+/* FOOTER */
+
 .sponsor-banner {
     margin-top: auto;
     background: #000;
@@ -199,10 +270,10 @@ body {
     justify-content: center;
     gap: 15px;
     border-radius: 6px;
-    border: 2px solid #e67e22;
+    border: 2px solid var(--accent-orange);
 }
 
-.fristo-logo {
+.hs-logo {
     background: #ff6b00;
     color: white;
     font-weight: bold;
@@ -217,66 +288,72 @@ body {
     font-style: italic;
 }
 
-/* ==========================================
-   MEDIA QUERIES (RESPONSIVE)
-   ========================================== */
+/* RESPONSIVE */
 
-/* Tablettes (Écrans inférieurs à 1024px) */
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-list {
+        position: static;
+        width: auto;
+        height: auto;
+        flex-direction: row;
+        padding: 0;
+        background: transparent;
+    }
+}
+
 @media (max-width: 1024px) {
     .content-grid {
-        grid-template-columns: 1fr 1fr; /* On passe sur 2 colonnes */
-    }
-    
-    .center-stage {
-        grid-column: span 2; /* Le centre prend toute la largeur en haut ou en bas */
-        order: -1; /* Place les phases finales au-dessus des groupes sur tablette */
+        grid-template-columns: 1fr 1fr;
     }
 
-    .slots-grid-8 {
-        grid-template-columns: repeat(2, 1fr); /* Moins de colonnes pour les slots */
+    .center-stage {
+        grid-column: span 2;
+        order: -1;
     }
-    
+
+    .slots-grid-8,
     .slots-grid-16 {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Smartphones (Écrans inférieurs à 768px) */
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
     .content-grid {
-        grid-template-columns: 1fr; /* Tout s'empile sur une seule colonne */
+        grid-template-columns: 1fr;
     }
 
     .center-stage {
         grid-column: span 1;
     }
 
-    .main-header h1 {
-        font-size: 1.6rem;
+    .page-title h1 {
+        font-size: 1.5rem;
     }
 
-    .slots-grid-8, .slots-grid-16 {
-        grid-template-columns: 1fr; /* Une seule ligne par match en mode KO */
+    .slots-grid-8,
+    .slots-grid-16 {
+        grid-template-columns: 1fr;
     }
 
     .slots {
         flex-direction: column;
-        gap: 8px;
     }
-}
-.stadien-card{
-     width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    
-    /* 1. Ligne de base de la bordure (couleur Or FIFA) */
-    border: 2px solid var(--accent-gold);
-    
-    /* 2. Effet néon : ombres superposées pour créer l'éclat diffus */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5),                /* Ombre portée classique */
-                0 0 10px rgba(226, 177, 60, 0.5),             /* Halo néon proche */
-                0 0 25px rgba(226, 177, 60, 0.3);             /* Lueur néon lointaine */
-                
-    /* Sécurité visuelle pour les animations */
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+
+    .match-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .team-name {
+        width: 90px;
+    }
 }
