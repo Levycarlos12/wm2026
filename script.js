@@ -47,3 +47,172 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// QUIZ PAGE //
+document.addEventListener("DOMContentLoaded", () => {
+    const questions = [
+        {
+            question: "Welches Land hat die meisten Fußball-Weltmeisterschaften gewonnen?",
+            answers: ["Deutschland", "Brasilien", "Italien", "Argentinien"],
+            correct: "Brasilien"
+        },
+        {
+            question: "Wann fand die erste FIFA-Weltmeisterschaft statt?",
+            answers: ["1920", "1930", "1950", "1966"],
+            correct: "1930"
+        },
+        {
+            question: "Wer ist der erfolgreichste WM-Torschütze aller Zeiten?",
+            answers: ["Pelé", "Miroslav Klose", "Lionel Messi", "Ronaldo Nazário"],
+            correct: "Lionel Messi"
+        },
+        {
+            question: "In welchen Ländern findet die WM 2026 statt?",
+            answers: ["Deutschland und Frankreich", "USA, Kanada und Mexiko", "Brasilien und Argentinien", "Spanien und Portugal"],
+            correct: "USA, Kanada und Mexiko"
+        },
+        {
+            question: "Wie viele Teams nehmen an der WM 2026 teil?",
+            answers: ["32", "40", "48", "64"],
+            correct: "48"
+        }
+    ];
+
+    const startScreen = document.getElementById("quiz-start");
+    const gameScreen = document.getElementById("quiz-game");
+    const resultScreen = document.getElementById("quiz-result");
+
+    const startButton = document.getElementById("start-quiz");
+    const nextButton = document.getElementById("next-question");
+    const restartButton = document.getElementById("restart-quiz");
+
+    const questionText = document.getElementById("question-text");
+    const answerButtons = document.getElementById("answer-buttons");
+    const questionCounter = document.getElementById("question-counter");
+    const scoreCounter = document.getElementById("score-counter");
+    const progressFill = document.getElementById("progress-fill");
+    const resultText = document.getElementById("result-text");
+
+    if (!startButton) return;
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    startButton.addEventListener("click", startQuiz);
+    nextButton.addEventListener("click", showNextQuestion);
+    restartButton.addEventListener("click", startQuiz);
+
+    loadQuizState();
+
+    function startQuiz() {
+        currentQuestionIndex = 0;
+        score = 0;
+
+        startScreen.hidden = true;
+        resultScreen.hidden = true;
+        gameScreen.hidden = false;
+
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const currentQuestion = questions[currentQuestionIndex];
+
+        questionText.textContent = currentQuestion.question;
+        answerButtons.innerHTML = "";
+        nextButton.hidden = true;
+
+        questionCounter.textContent = `Frage ${currentQuestionIndex + 1} von ${questions.length}`;
+        scoreCounter.textContent = `Punkte: ${score}`;
+
+        const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+        progressFill.style.width = `${progress}%`;
+
+        currentQuestion.answers.forEach((answer) => {
+            const button = document.createElement("button");
+            button.textContent = answer;
+            button.classList.add("answer-btn");
+            button.type = "button";
+
+            button.addEventListener("click", () => selectAnswer(button, answer));
+            answerButtons.appendChild(button);
+        });
+    }
+
+    function selectAnswer(selectedButton, selectedAnswer) {
+        const correctAnswer = questions[currentQuestionIndex].correct;
+        const allAnswerButtons = answerButtons.querySelectorAll(".answer-btn");
+
+        allAnswerButtons.forEach((button) => {
+            button.disabled = true;
+
+            if (button.textContent === correctAnswer) {
+                button.classList.add("correct");
+            }
+        });
+
+        if (selectedAnswer === correctAnswer) {
+            score++;
+            selectedButton.classList.add("correct");
+        } else {
+            selectedButton.classList.add("wrong");
+        }
+
+        scoreCounter.textContent = `Punkte: ${score}`;
+        nextButton.hidden = false;
+
+        saveQuizState();
+    }
+
+    function showNextQuestion() {
+        currentQuestionIndex++;
+
+          saveQuizState();
+
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+
+        const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+         progressFill.style.width = `${progress}%`;
+
+    }
+
+    function showResult() {
+        gameScreen.hidden = true;
+        resultScreen.hidden = false;
+
+        localStorage.removeItem("wmQuizState");
+
+        resultText.textContent = `Du hast ${score} von ${questions.length} Fragen richtig beantwortet.`;
+    }
+
+    function saveQuizState() {
+    const quizState = {
+        currentQuestionIndex: currentQuestionIndex,
+        score: score
+    };
+
+    localStorage.setItem("wmQuizState", JSON.stringify(quizState));
+}
+
+function loadQuizState() {
+    const savedState = localStorage.getItem("wmQuizState");
+
+    if (savedState) {
+        const quizState = JSON.parse(savedState);
+        currentQuestionIndex = quizState.currentQuestionIndex;
+        score = quizState.score;
+
+        startScreen.hidden = true;
+        resultScreen.hidden = true;
+        gameScreen.hidden = false;
+
+        showQuestion();
+    }
+}
+
+});
+

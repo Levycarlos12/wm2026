@@ -26,8 +26,14 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="Spielplan.html">Spielplan</a></li>                    
                     <li><a href="info.html">Geschichte</a></li> 
-                    <li><a href="Quiz.html">Quiz</a></li>                                    
+                    <li><a href="Quiz.html">Quiz</a></li>      
+                    
+
                     <li><a href="login.html">Login</a></li>
+
+                    
+
+
                 </ul>
             </nav>
         </header>
@@ -38,9 +44,40 @@
                 <p>Teste dein WM-Wissen und gewinne exklusive Preise.</p>
             </section>
 
-            <section class="info-page">
-                <p>Schalte jetzt dein Fußballwissen frei: Quizfragen zu Teams, Stadien und WM-Historie erwarten dich.</p>
-            </section>
+           <section class="quiz-section" aria-label="WM Quiz">
+    <article class="quiz-card">
+        <div id="quiz-start" class="quiz-screen">
+            <h2>Bereit für das WM-Quiz?</h2>
+            <p>Beantworte 10 Fragen über WM-Geschichte, Rekorde und die Weltmeisterschaft 2026.</p>
+            <button id="start-quiz" class="quiz-action-btn" type="button">Quiz starten</button>
+        </div>
+
+        <div id="quiz-game" class="quiz-screen" hidden>
+            <div class="quiz-status">
+                <p id="question-counter">Frage 1 von 10</p>
+                <p id="score-counter">Punkte: 0</p>
+            </div>
+
+            <div class="progress-bar" aria-label="Quiz Fortschritt">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+
+
+
+            <h2 id="question-text">Frage erscheint hier</h2>
+
+            <div id="answer-buttons" class="answer-grid"></div>
+
+            <button id="next-question" class="quiz-action-btn" type="button" hidden>Weiter</button>
+        </div>
+
+        <div id="quiz-result" class="quiz-screen" hidden>
+            <h2>Quiz beendet!</h2>
+            <p id="result-text">Dein Ergebnis erscheint hier.</p>
+            <button id="restart-quiz" class="quiz-action-btn" type="button">Nochmal spielen</button>
+        </div>
+    </article>
+</section>
         </main>
 
         <footer class="site-footer">
@@ -51,3 +88,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
